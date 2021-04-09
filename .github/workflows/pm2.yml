@@ -3,8 +3,6 @@ name: Test pm2
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - "**.md"
 
 jobs:
   test-pm2:
