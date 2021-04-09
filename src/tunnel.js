@@ -8,4 +8,5 @@ const fs = require('fs');
     console.log(`Opened tunnel for '${tunnel.clientId}', url: '${tunnel.url}'`);
     fs.writeFileSync('tunnel-url', tunnel.url);
     console.log("wrote url to file");
+    process.send( 'ready' );
 })();

@@ -25,5 +25,4 @@ jobs:
 
     - name: Check output
       run: |
-        sleep 15
         cat tunnel-url
