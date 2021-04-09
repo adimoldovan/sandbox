@@ -13,11 +13,11 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - name: Install and run pm2
-        run: |
-          yarn install
-          yarn pm2-tunnel
-          cat /home/runner/.pm2/pm2.log
+    - name: Install and run pm2
+      run: |
+        yarn install
+        yarn pm2-tunnel
+        cat /home/runner/.pm2/pm2.log
 
-      - name: Check output
-        run: cat tunnel-url
+    - name: Check output
+      run: cat tunnel-url
