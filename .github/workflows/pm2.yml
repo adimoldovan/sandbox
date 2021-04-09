@@ -4,15 +4,20 @@ on:
   push:
     branches: [master]
     paths-ignore:
-    - '**.md'
+      - "**.md"
 
 jobs:
   test-pm2:
-    - name: Install and run pm2
-      run: |
-        yarn install
-        yarn pm2-tunnel
-        cat /home/runner/.pm2/pm2.log
+    name: "Tests pm2 process"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
 
-    - name: Test
-      run: cat tunnel-url
+    steps:
+      - name: Install and run pm2
+        run: |
+          yarn install
+          yarn pm2-tunnel
+          cat /home/runner/.pm2/pm2.log
+
+      - name: Check output
+        run: cat tunnel-url
