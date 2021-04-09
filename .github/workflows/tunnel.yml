@@ -1,4 +1,4 @@
-name: Test pm2
+name: Test localtunnel with pm2
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   test-pm2:
-    name: "Tests pm2 process"
+    name: "Run tunnel as pm2 process"
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -23,7 +23,7 @@ jobs:
 
       - name: Start tunnel
         run: |
-          yarn tunne-on
+          yarn tunnel-on
           yarn pm2 logs --nostream
 
       - name: Check output
