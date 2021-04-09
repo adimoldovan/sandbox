@@ -24,4 +24,6 @@ jobs:
         cat /home/runner/.pm2/pm2.log
 
     - name: Check output
-      run: cat tunnel-url
+      run: |
+        sleep 15
+        cat tunnel-url
