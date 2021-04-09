@@ -11,18 +11,26 @@ jobs:
     timeout-minutes: 5
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Setup Node
-      uses: actions/setup-node@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
 
-    - name: Install and run pm2
-      run: |
-        yarn install
-        yarn pm2-tunnel
-        cat /home/runner/.pm2/pm2.log
+      - name: Install
+        run: |
+          yarn install
 
-    - name: Check output
-      run: |
-        cat tunnel-url
+      - name: Start tunnel
+        run: |
+          yarn tunne-on
+          yarn pm2 logs --nostream
+
+      - name: Check output
+        run: |
+          cat tunnel-url
+
+      - name: Stop tunnel
+        run: |
+          yarn tunnel-off
+          yarn pm2 logs --nostream

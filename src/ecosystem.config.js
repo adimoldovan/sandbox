@@ -1,12 +1,12 @@
 module.exports = {
-	apps: [
-		{
-			script: 'src/tunnel.js',
-			name: 'tunnel-test',
-			log_file: 'output/logs/tunnel.log',
-			time: true,
-            wait_ready: true,
-			listen_timeout: 15000,
-		},
-	],
+    apps: [
+        {
+            script: 'src/tunnel.js',
+            name: 'tunnel-test',
+            args: 'on',
+            log_file: 'output/logs/tunnel.log',
+            time: true,
+            auto_restart: false,
+        },
+    ],
 };
