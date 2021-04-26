@@ -16,8 +16,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Run ${{ matrix.group }} tests
+    - name: Set env value
       run: |
         echo "GUTENBERG=latest" >> $GITHUB_ENV
+    
+    - name: Run ${{ matrix.group }} tests
+      run: |
         echo "$GUTENBERG"
         echo ${{ env.GUTENBERG }}
