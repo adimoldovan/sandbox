@@ -11,11 +11,12 @@ jobs:
       fail-fast: false
       matrix:
         group: [ 'pre-connection', 'connection', 'post-connection', 'gutenberg' ]
-    env:
-      GUTENBERG: ${{ matrix.group }}
+    
         
     steps:
     - uses: actions/checkout@v2
     
     - name: Run ${{ matrix.group }} tests
-      run: echo $GUTENBERG
+      env:
+        GUTENBERG: ${{ matrix.group }}
+      run: echo "$GUTENBERG"
