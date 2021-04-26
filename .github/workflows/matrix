@@ -1,0 +1,21 @@
+name: Test matrix
+
+on:
+  push:
+
+jobs:
+  matrix-job:
+    name: "Run with ${{ matrix.group }} matrix value"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        group: [ 'pre-connection', 'connection', 'post-connection', 'gutenberg' ]
+      env:
+        GUTENBERG: ${{ matrix.group }}
+        
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Run ${{ matrix.group }} tests
+      run: echo $GUTENBERG
