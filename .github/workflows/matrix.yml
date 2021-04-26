@@ -19,6 +19,6 @@ jobs:
     - name: Run ${{ matrix.group }} tests
       run: |
         
-        if [ ${{ matrix.group }} == "gutenberg" ]; then echo "GUTNBERG=latest" >> $GITHUB_ENV; fi
+        if [ ${{ matrix.group }} == "gutenberg" ]; then echo "GUTENBERG=latest" >> $GITHUB_ENV; fi
         echo "$GUTENBERG"
         echo ${{ env.GUTENBERG }}
