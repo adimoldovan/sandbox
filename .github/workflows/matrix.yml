@@ -11,6 +11,8 @@ jobs:
       fail-fast: false
       matrix:
         group: [ 'pre-connection', 'connection', 'post-connection', 'gutenberg' ]
+    env:
+      GUTENBERG: bundle
     
         
     steps:
@@ -18,7 +20,7 @@ jobs:
     
     - name: Set env value
       run: |
-        echo "GUTENBERG=latest" >> $GITHUB_ENV
+        if [${{ matrix.group }} == 'gutenberg' ]; then echo "GUTENBERG=latest" >> $GITHUB_ENV; fi
     
     - name: Run ${{ matrix.group }} tests
       run: |
