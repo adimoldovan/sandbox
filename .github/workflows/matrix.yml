@@ -11,9 +11,6 @@ jobs:
       fail-fast: false
       matrix:
         group: [ 'pre-connection', 'connection', 'post-connection', 'gutenberg' ]
-    env:
-      GUTENBERG: bundle
-    
         
     steps:
     - uses: actions/checkout@v2
