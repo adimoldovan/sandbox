@@ -18,5 +18,5 @@ jobs:
     
     - name: Run ${{ matrix.group }} tests
       env:
-        GUTENBERG: ${{ matrix.group }}
+        GUTENBERG: if [ ${{ matrix.group }} == "gutenberg" ]; then 'latest' fi
       run: echo "$GUTENBERG"
