@@ -11,8 +11,8 @@ jobs:
       fail-fast: false
       matrix:
         group: [ 'pre-connection', 'connection', 'post-connection', 'gutenberg' ]
-      env:
-        GUTENBERG: ${{ matrix.group }}
+    env:
+      GUTENBERG: ${{ matrix.group }}
         
     steps:
     - uses: actions/checkout@v2
