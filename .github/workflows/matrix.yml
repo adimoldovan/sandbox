@@ -17,6 +17,6 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: Run ${{ matrix.group }} tests
-      env:
-        GUTENBERG: if [ ${{ matrix.group }} == "gutenberg" ]; then 'latest' fi
-      run: echo "$GUTENBERG"
+      run: |
+        if [ ${{ matrix.group }} == "gutenberg" ]; then export GUTENBERG=latest fi
+        echo "$GUTENBERG"
