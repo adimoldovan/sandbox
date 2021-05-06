@@ -36,5 +36,7 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: Notify
-      run: echo 'I ran because the previous job was successful'
+      run: |
+        echo 'I ran because the previous job was successful'
+        echo ${{ needs.matrix-job.result }}
   
