@@ -7,11 +7,14 @@ jobs:
   env-variables:
     name: "Check env variables"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        group: [ 'group 1', 'group 2' ]
         
     steps:
     - uses: actions/checkout@v2
     
-    - name: Print env variables
+    - name: Print env variables for ${{ matrix.group }}
       run: |
         echo $GITHUB_WORKFLOW
         echo $GITHUB_EVENT_PATH
@@ -19,8 +22,9 @@ jobs:
         echo $GITHUB_REF
         echo $GITHUB_HEAD_REF
         echo $GITHUB_BASE_REF
+        echo $GITHUB_RUN_ID
         
     - name: Upload event.json
       uses: actions/upload-artifact@v2
       with:
-        path: ${{github.event_path}}
+        path: ${{ github.event_path }}
