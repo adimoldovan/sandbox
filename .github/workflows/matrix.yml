@@ -25,3 +25,15 @@ jobs:
       run: |
         echo "$GUTENBERG"
         echo ${{ env.GUTENBERG }}
+  
+  conditional-job:
+    name: "Report"
+    runs-on: ubuntu-latest
+    needs: matrix-job
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Notify
+      run: echo 'I ran because the previous job was successful'
+  
