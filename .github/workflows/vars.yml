@@ -7,8 +7,6 @@ jobs:
   env-variables:
     name: "Check env variables"
     runs-on: ubuntu-latest
-    env:
-      GUTENBERG: bundle
         
     steps:
     - uses: actions/checkout@v2
@@ -25,5 +23,5 @@ jobs:
     - name: Upload event.json
       uses: actions/upload-artifact@v2
       with:
-        name: $GITHUB_EVENT_PATH
-        path: event.json
+        name: event.json
+        path: $GITHUB_EVENT_PATH
