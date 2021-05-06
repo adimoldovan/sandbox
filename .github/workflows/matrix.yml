@@ -25,7 +25,7 @@ jobs:
       run: |
         echo "$GUTENBERG"
         echo ${{ env.GUTENBERG }}
-        if [ ${{ matrix.group }} == gutenberg ]; then exit 1; fi
+        # if [ ${{ matrix.group }} == gutenberg ]; then exit 1; fi
   
   conditional-job:
     name: "Report"
