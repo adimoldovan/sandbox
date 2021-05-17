@@ -2,6 +2,9 @@ name: Test env variables
 
 on:
   push:
+  
+  schedule:
+    - cron: '0/1 * * * *'
 
 jobs:
   env-variables:
@@ -28,3 +31,9 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         path: ${{ github.event_path }}
+
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        echo "$GITHUB_CONTEXT"
