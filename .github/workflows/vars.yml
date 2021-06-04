@@ -37,3 +37,5 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: |
         echo "$GITHUB_CONTEXT"
+        echo "PR number: ${{ github.event.pull_request.number }}"
+        echo "Branch: ${{ github.ref }}"
