@@ -6,7 +6,7 @@ on:
       - 'src/folder_one/**'
 
 jobs:
-  matrix-job:
+  test-paths-job:
     name: "folder_one changed"
     runs-on: ubuntu-latest
         
