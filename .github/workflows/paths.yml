@@ -1,0 +1,18 @@
+name: Paths tests
+
+on:
+  push:
+    paths:
+      - 'src/folder_one/**'
+
+jobs:
+  matrix-job:
+    name: "folder_one changed"
+    runs-on: ubuntu-latest
+        
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set env value
+      run: echo 'folder_one changed'
+  
