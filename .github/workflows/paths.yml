@@ -7,7 +7,7 @@ on:
       - 'src/folder_one/**'
   pull_request:
     paths:
-      - 'src/folder_three/**'
+      - 'src/folder_one/**'
 
 jobs:
   test-paths-job:
