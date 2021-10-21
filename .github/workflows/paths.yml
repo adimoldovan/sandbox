@@ -2,6 +2,10 @@ name: Paths tests
 
 on:
   push:
+    branches: [main]
+    paths:
+      - 'src/folder_one/**'
+  pull_request:
     paths:
       - 'src/folder_one/**'
 
