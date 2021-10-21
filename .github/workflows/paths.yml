@@ -13,6 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Set env value
+    - name: Echo stuff
       run: echo 'folder_one changed'
   
