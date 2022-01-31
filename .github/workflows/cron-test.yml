@@ -2,8 +2,8 @@ name: Cron test
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
-    - cron: '*/6 * * * *'
+    - cron: '*/15 * * * *'
+    - cron: '*/20 * * * *'
     
 jobs:
   test-cron:
