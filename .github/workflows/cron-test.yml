@@ -18,4 +18,4 @@ jobs:
           env:
             CRON: github.event.schedule
           run: |
-            ./test-cron.sh
+            test-cron.sh
