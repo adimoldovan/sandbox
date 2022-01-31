@@ -18,4 +18,4 @@ jobs:
           id: check-cron
           env:
             CRON: github.event.schedule
-          run: ./github/workflows/test-cron.sh
+          run: ./.github/workflows/test-cron.sh
