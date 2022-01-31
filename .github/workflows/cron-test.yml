@@ -1,6 +1,7 @@
 name: Cron test
 
 on:
+  push:
   schedule:
     - cron: '*/15 * * * *'
     - cron: '*/20 * * * *'
