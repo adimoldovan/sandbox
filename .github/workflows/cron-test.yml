@@ -17,5 +17,4 @@ jobs:
           id: check-cron
           env:
             CRON: github.event.schedule
-          run: |
-            test-cron.sh
+          run: test-cron.sh
