@@ -1,0 +1,21 @@
+name: Cron test
+on:
+
+  schedule:
+    - cron: '*/2 * * * *'
+    - cron: '*/3 * * * *'
+    
+jobs:
+  test-cron:
+      name: "Tests cron"
+      runs-on: ubuntu-latest
+      timeout-minutes: 1
+      steps:
+        - uses: actions/checkout@v2
+
+        - name: Check cron
+          id: check-cron
+          env:
+            CRON: github.event.schedule
+          run: |
+            ./test-cron.sh
