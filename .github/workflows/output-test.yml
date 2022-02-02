@@ -1,0 +1,35 @@
+name: Output test
+
+on:
+  push:
+
+jobs:
+  set-output:
+    name: "Set output"
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      out1: ${{ steps.set-output.outputs.out1 }}
+      out2: ${{ steps.set-output.outputs.out2 }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set output
+        id: set-output
+        run: |
+          OUT1="value 1"
+          echo "::set-output name=out1::$OUT1"
+          OUT2="value 2"
+          echo "::set-output name=out2::$OUT2"
+
+
+  get-output:
+    name: "Get output"
+    runs-on: ubuntu-latest
+    needs: set-output
+
+    steps:
+    - name: Print outputs
+      run: |
+        echo ${{ needs.set-output.outputs.out1 }}
+        echo ${{ needs.set-output.outputs.out2 }}
