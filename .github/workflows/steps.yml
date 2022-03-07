@@ -7,7 +7,7 @@ jobs:
   multiple-commands:
     runs-on: ubuntu-latest
     steps:
-      - name: Set output
+      - name: Run some bash commands
         run: |
-          ./fail.sh
+          fail.sh
           echo "I ran after a failed commad"
