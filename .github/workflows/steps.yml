@@ -1,0 +1,12 @@
+name: Steps test
+
+on:
+  push:
+
+jobs:
+  multiple-commands:
+    steps:
+      - name: Set output
+        run: |
+          ./bin/fail.sh
+          echo "I ran after a failed commad"
