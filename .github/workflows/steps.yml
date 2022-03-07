@@ -7,7 +7,8 @@ jobs:
   multiple-commands:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Run some bash commands
         run: |
-          fail.sh
+          bash ./.github/workflows/fail.sh
           echo "I ran after a failed commad"
