@@ -10,5 +10,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run some bash commands
         run: |
-          bash ./.github/workflows/fail.sh
+          bash ./.github/workflows/fail.sh || true
           echo "I ran after a failed commad"
