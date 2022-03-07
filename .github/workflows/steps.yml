@@ -11,4 +11,5 @@ jobs:
       - name: Run some bash commands
         run: |
           bash ./.github/workflows/fail.sh || true
+          echo $?
           echo "I ran after a failed commad"
