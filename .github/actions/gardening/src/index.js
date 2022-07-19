@@ -15,11 +15,11 @@ const { context, getOctokit } = require( '@actions/github' );
 
 	const { number, repository, pull_request } = context.payload;
 	const { owner, name } = repository;
-	const labels = new Set();
+	const labels = [];
 
 	if(pull_request && pull_request.draft) {
 		console.log('This PR is a draft');
-		labels.add('in progress');
+		labels.push('in progress');
 	} else {
 		console.log('This PR is a ready to review (not a draft)');
 	}
@@ -28,7 +28,7 @@ const { context, getOctokit } = require( '@actions/github' );
 		owner: owner.login,
 		repo: name,
 		issue_number: number,
-		labels: Array.from(labels),
+		labels,
 	} );
 
 } )();
