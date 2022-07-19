@@ -22,7 +22,7 @@ const { context, getOctokit } = require( '@actions/github' );
 
 	if(isDraft) {
 		console.log('This PR is a draft');
-		labels.push('in progress');
+		labels.add('in progress');
 	} else {
 		console.log('This PR is a ready to review (not a draft)');
 	}
