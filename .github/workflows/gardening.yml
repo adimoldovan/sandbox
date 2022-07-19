@@ -1,7 +1,7 @@
 name: Gardening
 on:
   pull_request_target: 
-    types: [opened, reopened, synchronize, edited, labeled, closed]
+    types: [opened, reopened, synchronize, edited, labeled, closed, converted_to_draft, ready_for_review]
   issue_comment: 
     types: [created]
   push:
@@ -20,6 +20,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Build Action
+        run: |
+          npm install
+          npm run build
+        working-directory: ./.github/actions/gardening
 
       - name: "Run the action"
         uses: ./.github/actions/gardening
