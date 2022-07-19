@@ -25,6 +25,8 @@ const { context, getOctokit } = require( '@actions/github' );
 		labels.delete('in progress');
 	}
 
+	console.log(`Labels: ${labels}`);
+
 	await octokit.rest.issues.addLabels( {
 		owner: owner.login,
 		repo: name,
