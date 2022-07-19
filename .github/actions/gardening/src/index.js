@@ -20,7 +20,7 @@ const { context, getOctokit } = require( '@actions/github' );
 	const isDraft = (pull_request && pull_request.draft);
 	console.log(isDraft);
 
-	if(pull_request && pull_request.draft) {
+	if(isDraft) {
 		console.log('This PR is a draft');
 		labels.push('in progress');
 	} else {
