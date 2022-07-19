@@ -2,8 +2,6 @@ name: Gardening
 on:
   pull_request_target: 
     types: [opened, reopened, synchronize, edited, labeled, closed]
-  issues: 
-    types: [opened, reopened, edited]
   issue_comment: 
     types: [created]
   push:
