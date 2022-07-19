@@ -22,7 +22,6 @@ const { context, getOctokit } = require( '@actions/github' );
 		labels.add('in progress');
 	} else {
 		console.log('This PR is a ready to review (not a draft)');
-		labels.delete('in progress');
 	}
 
 	await octokit.rest.issues.addLabels( {
