@@ -17,6 +17,9 @@ const { context, getOctokit } = require( '@actions/github' );
 	const { owner, name } = repository;
 	const labels = new Set();
 
+	const isDraft = (pull_request && pull_request.draft);
+	console.log(isDraft);
+
 	if(pull_request && pull_request.draft) {
 		console.log('This PR is a draft');
 		labels.push('in progress');
