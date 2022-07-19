@@ -17,7 +17,7 @@ const { context, getOctokit } = require( '@actions/github' );
 	const { owner, name } = repository;
 	const labels = new Set();
 
-	const isDraft = (pull_request && pull_request.draft);
+	const isDraft = !! (pull_request && pull_request.draft);
 	console.log(isDraft);
 
 	if(isDraft) {
