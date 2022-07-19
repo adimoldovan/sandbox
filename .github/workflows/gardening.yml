@@ -21,6 +21,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Build Action
+        run: |
+          npm install
+          npm run build
+        working-directory: ./github/actions/gardening
+
       - name: "Run the action"
         uses: ./.github/actions/gardening
         with:
