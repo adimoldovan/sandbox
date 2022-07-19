@@ -11,5 +11,13 @@ const { context, getOctokit } = require( '@actions/github' );
 
 	const octokit = new getOctokit( token );
 
+	const {pull_request} = context.payload;
+
+	if(pull_request.draft) {
+		console.log('This PR is a draft')
+	} else {
+		console.log('This PR is a ready to review (not a draft)')
+	}
+
     console.log(context.payload);
 } )();
