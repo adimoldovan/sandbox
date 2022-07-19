@@ -15,20 +15,26 @@ const { context, getOctokit } = require( '@actions/github' );
 
 	const { number, repository, pull_request } = context.payload;
 	const { owner, name } = repository;
-	const labels = [];
+	const labels = new Set();
 
-	if(pull_request && pull_request.draft) {
+	const isDraft = !! (pull_request && pull_request.draft);
+	console.log(isDraft);
+
+	if(isDraft) {
 		console.log('This PR is a draft');
-		labels.push('in progress');
+		labels.add('in progress');
 	} else {
 		console.log('This PR is a ready to review (not a draft)');
 	}
 
-	await octokit.rest.issues.addLabels( {
-		owner: owner.login,
-		repo: name,
-		issue_number: number,
-		labels,
-	} );
+	if(labels.size > 0) {
+		await octokit.rest.issues.addLabels( {
+			owner: owner.login,
+			repo: name,
+			issue_number: number,
+			labels: [...labels],
+		} );
+	}
+	
 
 } )();
