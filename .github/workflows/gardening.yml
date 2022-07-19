@@ -1,7 +1,7 @@
 name: Gardening
 on:
   pull_request_target: 
-    types: [opened, reopened, synchronize, edited, labeled, closed]
+    types: [opened, reopened, synchronize, edited, labeled, closed, converted_to_draft]
   issue_comment: 
     types: [created]
   push:
