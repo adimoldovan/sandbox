@@ -1,0 +1,29 @@
+name: Gardening
+on:
+  pull_request_target: 
+    types: [opened, reopened, synchronize, edited, labeled, closed]
+  issues: 
+    types: [opened, reopened, edited]
+  issue_comment: 
+    types: [created]
+  push:
+    branches:
+      - main 
+concurrency:
+  group: gardening-${{ github.event_name }}-${{ github.event.action }}-${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  repo-gardening:
+    name: "Manage labels"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request_target' || github.event.pull_request.head.repo.full_name == github.event.pull_request.base.repo.full_name
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: "Run the action"
+        uses: ./actions/gardening
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
