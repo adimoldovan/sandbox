@@ -33,7 +33,7 @@ const { WebClient, retryPolicies, LogLevel } = require( '@slack/web-api' );
 
 	process.stdout.write(JSON.stringify(jobs));
 
-	const conclusions = jobs.jobs.map(job => job.conclusion)
+	const conclusions = JSON.parse(jobs).jobs.map(job => job.conclusion)
 
 	process.stdout.write(JSON.stringify(conclusions));
 
@@ -47,7 +47,7 @@ const { WebClient, retryPolicies, LogLevel } = require( '@slack/web-api' );
 	}
 
 	await client.chat.postMessage( {
-		text: `Received event = '${ context.eventName }', action = '${ context.payload.action }'`,
+		text: `Received event = '${ context.eventName }', action = '${ context.payload.action }', conclusions = ${conclusions}`,
 		channel,
 		username: 'Reporter',
 		icon_emoji: ':wave:',
