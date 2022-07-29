@@ -1,0 +1,33 @@
+name: Gardening
+on:
+  pull_request: 
+  push:
+    branches:
+      - main 
+
+jobs:
+  first-job:
+    name: "Job before Slack notification"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Step one"
+        run: echo "Hello"
+
+  repo-gardening:
+    name: "Send notification"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build Action
+        run: |
+          npm install
+          npm run build
+        working-directory: ./.github/actions/slack
+
+      - name: "Run the action"
+        uses: ./.github/actions/slack
+        with:
+          slack_token: ${{ secrets.SLACK_TOKEN }}
+          slack_channel_id: ${{ secrets.SLACK_CHANNEL_ID }}

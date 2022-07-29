@@ -1,0 +1,17 @@
+name: "Slack notification"
+description: ""
+branding:
+  icon: 'activity'
+  color: 'green'
+inputs:
+  slack_token:
+    description: "Slack Bot access token"
+    required: true
+    default: ""
+  slack_channel_id:
+    description: "Slack channel ID where to send messages"
+    required: true
+    default: ""
+runs:
+  using: node16
+  main: "dist/index.js"
