@@ -21,13 +21,13 @@ const { WebClient, retryPolicies, LogLevel } = require( '@slack/web-api' );
 		return;
 	}
 
-	// process.stdout.write(JSON.stringify(context));
+	process.stdout.write(JSON.stringify(context));
 
 	const octokit = new getOctokit( ghToken );
 
 	const jobs = octokit.rest.actions.listJobsForWorkflowRun({
-		owner: context.payload.repository.owner.login,
-		repo: context.payload.repository.name,
+		owner: 'adimoldovan',
+		repo: 'sandbox',
 		run_id: context.runId,
 	  });
 
