@@ -25,13 +25,13 @@ const { WebClient, retryPolicies, LogLevel } = require( '@slack/web-api' );
 
 	const octokit = new getOctokit( ghToken );
 
-	const run = octokit.rest.actions.getWorkflowRun({
+	const jobs = octokit.rest.actions.listJobsForWorkflowRun({
 		owner: context.payload.repository.owner.login,
 		repo: context.payload.repository.name,
 		run_id: context.runId,
 	  });
 
-	process.stdout.write(JSON.stringify(run));
+	process.stdout.write(JSON.stringify(jobs));
 
 	const client = new WebClient( token, {
 		retryConfig: retryPolicies.rapidRetryPolicy,
