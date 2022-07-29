@@ -33,8 +33,9 @@ const { WebClient, retryPolicies, LogLevel } = require( '@slack/web-api' );
 
 	process.stdout.write(JSON.stringify(response));
 
-	//const conclusions = [...new Set(response.data.jobs.map(job => job.conclusion))]
-	const conclusions = response.data.jobs.filter(job => job.status === 'completed').map(job => job.conclusion)
+	const conclusions = [...new Set(response.data.jobs.filter(job => job.status === 'completed').map(job => job.conclusion))]
+	
+	const isFailure = !! conclusions.some(conclusions => conclusions != 'success')
 
 	process.stdout.write(JSON.stringify(conclusions));
 
@@ -43,12 +44,8 @@ const { WebClient, retryPolicies, LogLevel } = require( '@slack/web-api' );
 		logLevel: LogLevel.ERROR,
 	} );
 
-	if(context.eventName === 'pull_request') {
-
-	}
-
 	await client.chat.postMessage( {
-		text: `Received event = '${ context.eventName }', action = '${ context.payload.action }', conclusions = ${conclusions}`,
+		text: `Received event = '${ context.eventName }', action = '${ context.payload.action }', conclusions = ${conclusions}, failure: ${isFailure}`,
 		channel,
 		username: 'Reporter',
 		icon_emoji: ':wave:',
