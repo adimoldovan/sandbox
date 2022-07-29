@@ -9,9 +9,9 @@ const { WebClient, retryPolicies, LogLevel } = require( '@slack/web-api' );
 		return;
 	}
 
-	const channel = getInput( 'slack_channel' );
+	const channel = getInput( 'slack_channel_id' );
 	if ( ! channel ) {
-		setFailed( 'Input `slack_channel` is required' );
+		setFailed( 'Input `slack_channel_id` is required' );
 		return;
 	}
 
