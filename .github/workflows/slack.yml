@@ -1,4 +1,4 @@
-name: Gardening
+name: Slack
 on:
   pull_request: 
   push:
