@@ -7,11 +7,11 @@ on:
 
 jobs:
   first-job:
-    name: "Firs job before Slack notification"
+    name: "First job before Slack notification"
     runs-on: ubuntu-latest
     steps:
       - name: "Step one"
-        run: echo "Hello"
+        run: sleep 25 && echo "Hello"
 
   second-job:
     name: "Second job before Slack notification"
