@@ -30,5 +30,6 @@ jobs:
       - name: "Run the action"
         uses: ./.github/actions/slack
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           slack_token: ${{ secrets.SLACK_TOKEN }}
           slack_channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
