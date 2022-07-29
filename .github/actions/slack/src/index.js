@@ -34,7 +34,7 @@ const { WebClient, retryPolicies, LogLevel } = require( '@slack/web-api' );
 	process.stdout.write(JSON.stringify(response));
 
 	//const conclusions = [...new Set(response.data.jobs.map(job => job.conclusion))]
-	const conclusions = response.data.jobs.map(job => job.conclusion)
+	const conclusions = response.data.jobs.filter(job => job.status === 'completed').map(job => job.conclusion)
 
 	process.stdout.write(JSON.stringify(conclusions));
 
