@@ -15,7 +15,7 @@ const { WebClient, retryPolicies, LogLevel } = require( '@slack/web-api' );
 		return;
 	}
 
-	process.stdout.write(`${ context }'`);
+	process.stdout.write(JSON.stringify(context));
 
 	const client = new WebClient( token, {
 		retryConfig: retryPolicies.rapidRetryPolicy,
