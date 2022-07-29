@@ -26,9 +26,9 @@ const { WebClient, retryPolicies, LogLevel } = require( '@slack/web-api' );
 	const octokit = new getOctokit( ghToken );
 
 	const jobs = await octokit.rest.actions.listJobsForWorkflowRun({
-		owner: 'adimoldovan',
-		repo: 'sandbox',
-		run_id: 2760268137,
+		owner: context.payload.repository.owner.login,
+		repo: context.payload.repository.name,
+		run_id: context.runId,
 	  });
 
 	process.stdout.write(JSON.stringify(jobs));
