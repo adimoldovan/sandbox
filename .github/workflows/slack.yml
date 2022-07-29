@@ -7,7 +7,14 @@ on:
 
 jobs:
   first-job:
-    name: "Job before Slack notification"
+    name: "Firs job before Slack notification"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Step one"
+        run: echo "Hello"
+
+  second-job:
+    name: "Second job before Slack notification"
     runs-on: ubuntu-latest
     steps:
       - name: "Step one"
@@ -16,7 +23,7 @@ jobs:
   slack-notification:
     name: "Send notification"
     runs-on: ubuntu-latest
-    needs: [first-job]
+    needs: [second-job]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
