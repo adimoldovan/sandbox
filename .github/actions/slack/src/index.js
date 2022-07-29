@@ -21,7 +21,7 @@ const { WebClient, retryPolicies, LogLevel } = require( '@slack/web-api' );
 		return;
 	}
 
-	process.stdout.write(JSON.stringify(context));
+	// process.stdout.write(JSON.stringify(context));
 
 	const octokit = new getOctokit( ghToken );
 
