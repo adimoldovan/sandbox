@@ -18,8 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Step one"
-        run: echo "Hello" && exit 1
-
+        run: echo "Hello"
+        
   parallel-job:
     name: "Parallel with Slack notification"
     runs-on: ubuntu-latest
