@@ -26,7 +26,7 @@ jobs:
     needs: [second-job]
     steps:
       - name: "Step one"
-        run: echo "Hello, I run in parallel"
+        run: sleep 20
 
   slack-notification:
     name: "Send notification"
