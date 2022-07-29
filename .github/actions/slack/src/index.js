@@ -39,15 +39,29 @@ const { WebClient, retryPolicies, LogLevel } = require( '@slack/web-api' );
 
 	process.stdout.write(JSON.stringify(conclusions));
 
+	const status = isFailure ? 'failed' : 'passed';
+	let event = context.sha;
+
+	if (context.eventName === 'pull_request') {
+		const {pr} = context.payload.pull_request;
+		event = `PR ${pr.title} (${pr.number})`;
+	}
+
+	if (context.eventName === 'push') {
+		event = `commit id ${context.sha} on branch ${context.ref.substring( 11 )}`;
+	}
+
+	const text = `Tests ${status} for ${event}`;
+
 	const client = new WebClient( token, {
 		retryConfig: retryPolicies.rapidRetryPolicy,
 		logLevel: LogLevel.ERROR,
 	} );
 
 	await client.chat.postMessage( {
-		text: `Received event = '${ context.eventName }', action = '${ context.payload.action }', conclusions = ${conclusions}, failure: ${isFailure}`,
+		text,
 		channel,
 		username: 'Reporter',
-		icon_emoji: ':wave:',
+		icon_emoji: ':bot:',
 	} );
 } )();
