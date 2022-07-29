@@ -33,7 +33,7 @@ const { WebClient, retryPolicies, LogLevel } = require( '@slack/web-api' );
 
 	process.stdout.write(JSON.stringify(jobs));
 
-	const conclusions = JSON.parse(jobs).jobs.map(job => job.conclusion)
+	const conclusions = jobs.map(job => job.conclusion)
 
 	process.stdout.write(JSON.stringify(conclusions));
 
