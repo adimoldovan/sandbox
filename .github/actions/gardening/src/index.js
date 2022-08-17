@@ -11,7 +11,7 @@ const { context, getOctokit } = require( '@actions/github' );
 
 	const octokit = new getOctokit( token );
 	
-	console.log(context.payload);
+	console.log(context);
 
 	const { number, repository, pull_request } = context.payload;
 	const { owner, name } = repository;
