@@ -30,7 +30,7 @@ jobs:
         echo "GITHUB_RUN_ID $GITHUB_RUN_ID"
         echo "GITHUB_ACTION $GITHUB_ACTION"
         echo "GITHUB_JOB $GITHUB_JOB"
-        echo "GITHUB_TRIGERRING_ACTOR $GITHUB_TRIGERRING_ACTOR"
+        echo "GITHUB_TRIGGERING_ACTOR $GITHUB_TRIGGERING_ACTOR"
 
         
     - name: Upload event.json
