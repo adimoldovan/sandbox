@@ -30,6 +30,7 @@ jobs:
         echo "GITHUB_RUN_ID $GITHUB_RUN_ID"
         echo "GITHUB_ACTION $GITHUB_ACTION"
         echo "GITHUB_JOB $GITHUB_JOB"
+        echo "GITHUB_TRIGERRING_ACTOR $GITHUB_TRIGERRING_ACTOR"
 
         
     - name: Upload event.json
@@ -43,4 +44,4 @@ jobs:
       run: |
         echo "$GITHUB_CONTEXT"
         echo "PR number: ${{ github.event.pull_request.number }}"
-        echo "Branch: ${{ github.ref }}"
+        echo "Ref: ${{ github.ref }}"
