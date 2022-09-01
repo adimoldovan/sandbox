@@ -14,11 +14,14 @@ jobs:
         version: [10, 12, 14]
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: "Upload"
         uses: actions/upload-artifact@v3
         with:
           name: artifact-${{ matrix.version }}
-          path: .github/workflows/artifacts.yml
+          path: ./.github/workflows/artifacts.yml
 
   download:
     name: "Download and use an artifact"
