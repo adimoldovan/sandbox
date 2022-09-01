@@ -18,7 +18,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifact-${{ matrix.version }}
-          path: ./.github/workflows/artifacts.yml
+          path: .github/workflows/artifacts.yml
 
   download:
     name: "Download and use an artifact"
