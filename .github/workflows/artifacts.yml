@@ -31,5 +31,4 @@ jobs:
           path: download
 
       - name: "Check artifacts"
-        working-directory: download
         run: pwd && ls -R
