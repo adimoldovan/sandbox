@@ -1,0 +1,35 @@
+name: Artifacts
+on:
+  pull_request: 
+  push:
+    branches:
+      - main 
+
+jobs:
+  upload:
+    name: "Upload an artifact"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [10, 12, 14]
+
+    steps:
+      - name: "Upload"
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact-${{ matrix.version }}
+          path: ./.github/workflows/artifacts.yml
+
+  download:
+    name: "Download and use an artifact"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Download"
+        uses: actions/download-artifact@v3
+        with:
+          path: download
+
+      - name: "Check artifacts"
+        working-directory: download
+        run: pwd && ls -R
