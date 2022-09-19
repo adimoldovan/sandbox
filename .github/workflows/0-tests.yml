@@ -21,5 +21,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Download artifacts
+        if: ${{ env.GITHUB_EVENT_NAME == 'workflow_run' }}
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: 0-build.yml
+          workflow_conclusion: "success"
+          path: ../downloads
+
       - name: Run tests
-        run: echo "running tests"
+        run: |
+          ls -lh ../downloads
+          echo "running tests"
