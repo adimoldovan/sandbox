@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+  workflow_run:
+    types: [ 'completed' ]
+    workflows:
+      - Build
 
 jobs:
   run-tests:
