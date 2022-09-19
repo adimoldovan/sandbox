@@ -32,7 +32,7 @@ jobs:
       - name: Run tests
         run: |
           if [ "$GITHUB_EVENT_NAME" == workflow_run ]; then
-            echo "Running tests on downloaded artifacts"
+            echo "Running tests on downloaded artifacts "
             ls -lh ../downloads
           else
             echo "Running tests on local build"
