@@ -44,7 +44,7 @@ jobs:
           if [ "$GITHUB_EVENT_NAME" == workflow_run ]; then
             echo "Running tests on downloaded artifacts"
             ls -lh -R ../downloads
-            ls -lh -R ../build-output
+            ls -lh -R ./build-output
           else
             echo "Running tests on local build"
           fi
