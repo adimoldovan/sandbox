@@ -51,10 +51,11 @@ jobs:
 
       - name: Extract build archive
         if: github.event_name == 'workflow_run'
-        run: tar --xz -xvvf ./build-output/jetpack-build/build.tar.xz
+        working-directory: ./build-output
+        run: tar --xz -xvvf ./jetpack-build/build.tar.xz
 
       - name: Run tests
         if: github.event_name == 'workflow_run'
-        working-directory: ./build
+        working-directory: ./build-output/build
         run: ls -lh -R
 
