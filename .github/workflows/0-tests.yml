@@ -36,7 +36,7 @@ jobs:
           repo: automattic/jetpack
           run_id: 3093614029
           workflow_conclusion: "success"
-          path: ../build-output
+          path: build-output
 
       - name: Check downloaded artefacts
         if: github.event_name == 'workflow_run'
@@ -51,7 +51,7 @@ jobs:
 
       - name: Extract build archive
         if: github.event_name == 'workflow_run'
-        run: tar --xz -xvvf ../build-output/jetpack-build/build.tar.xz
+        run: tar --xz -xvvf ./build-output/jetpack-build/build.tar.xz
 
       - name: Run tests
         if: github.event_name == 'workflow_run'
