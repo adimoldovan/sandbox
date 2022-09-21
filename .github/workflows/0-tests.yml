@@ -29,11 +29,21 @@ jobs:
           workflow_conclusion: "success"
           path: ../downloads
 
+      - name: Download external artifacts
+        if: github.event_name == 'workflow_run'
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          repo: automattic/jetpack
+          run_id: 3079763302
+          workflow_conclusion: "success"
+          path: ../build-output
+
       - name: Run tests
         run: |
           if [ "$GITHUB_EVENT_NAME" == workflow_run ]; then
-            echo "Running tests on downloaded artifacts "
+            echo "Running tests on downloaded artifacts"
             ls -lh ../downloads
+            ls -lh ../build-output
           else
             echo "Running tests on local build"
           fi
