@@ -38,7 +38,7 @@ jobs:
           workflow_conclusion: "success"
           path: ../build-output
 
-      - name: Run tests
+      - name: Check downloaded artefacts
         run: |
           if [ "$GITHUB_EVENT_NAME" == workflow_run ]; then
             echo "Running tests on downloaded artifacts"
@@ -47,3 +47,11 @@ jobs:
           else
             echo "Running tests on local build"
           fi
+
+      - name: Extract build archive
+        run: tar --xz -xvvf ../build-output/jetpack-build/build.tar.xz
+
+      - name: Run tests
+        working-directory: ./build
+        run: ls -lh -R
+
