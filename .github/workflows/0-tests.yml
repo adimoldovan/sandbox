@@ -37,6 +37,10 @@ jobs:
         if: ${{ env.SOME_SECRET == '' }}
         run: echo "Missing secret"
 
+      - name: Run if secret is set
+        if: ${{ env.SOME_SECRET != '' }}
+        run: echo "Secret is set"
+
       - name: Download artifacts
         if: github.event_name == 'workflow_run'
         uses: dawidd6/action-download-artifact@v2
