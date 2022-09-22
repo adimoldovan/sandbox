@@ -19,6 +19,7 @@ jobs:
     env:
       EVENT_NAME: ${{ github.event_name }}
       SOME_SECRET: ${{ secrets.SOME_SECRET }}
+      GITHUB_CONTEXT: ${{ toJson(github) }}
 
     steps:
       - name: Checkout
@@ -28,6 +29,7 @@ jobs:
         run: | 
           echo $EVENT_NAME
           echo $SOME_SECRET
+          echo $GITHUB_CONTEXT
 
       - name: Run on push
         if: ${{ env.EVENT_NAME == 'push' }}
