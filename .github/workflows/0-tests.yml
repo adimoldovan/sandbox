@@ -27,7 +27,7 @@ jobs:
         run: echo $EVENT_NAME
 
       - name: Run on push
-        if: ${{ $EVENT_NAME == 'push' }}
+        if: $EVENT_NAME == 'push'
         run: echo "Run on push"
 
       - name: Download artifacts
