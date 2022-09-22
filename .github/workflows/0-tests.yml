@@ -26,6 +26,10 @@ jobs:
       - name: Debug
         run: echo $EVENT_NAME
 
+      - name: Run on push
+        if: ${{ $EVENT_NAME == 'push' }}
+        run: echo "Run on push"
+
       - name: Download artifacts
         if: github.event_name == 'workflow_run'
         uses: dawidd6/action-download-artifact@v2
