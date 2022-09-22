@@ -34,7 +34,7 @@ jobs:
         run: echo "Run on push"
 
       - name: Run if secret is not set
-        if: ${{ env.SOME_SECRET == '' }}
+        if: env.SOME_SECRET == ''
         run: echo "Missing secret"
 
       - name: Run if secret is set
