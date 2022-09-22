@@ -18,17 +18,24 @@ jobs:
         version: [10, 12]
     env:
       EVENT_NAME: ${{ github.event_name }}
+      SOME_SECRET: ${{ secrets.SOME_SECRET }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Debug
-        run: echo $EVENT_NAME
+        run: | 
+          echo $EVENT_NAME
+          echo $SOME_SECRET
 
       - name: Run on push
         if: ${{ env.EVENT_NAME == 'push' }}
         run: echo "Run on push"
+
+      - name: Run if secret is not set
+        if: ${{ env.SOME_SECRET == '' }}
+        run: echo "Missing secret"
 
       - name: Download artifacts
         if: github.event_name == 'workflow_run'
