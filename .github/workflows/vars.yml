@@ -20,7 +20,7 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: "Check repo name"
-      if: github.repository == adimoldovan/sandbox
+      if: $${{github.repository == 'adimoldovan/sandbox'}}
       run: echo "It's a match!"
 
     - name: Print env variables for ${{ matrix.group }}
