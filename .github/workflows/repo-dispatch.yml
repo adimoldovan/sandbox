@@ -16,7 +16,7 @@ jobs:
           TOKEN: ${{ secrets.REPO_DISPATCH_TOKEN }}
           EVENT_TYPE: ${{ github.event_name }}
         run: |
-          curl -X POST https://api.github.com/repos/adimoldovan/demo-ui-tests-playwright-jest \
+          curl -X POST https://api.github.com/repos/adimoldovan/demo-ui-tests-playwright-jest/dispatches \
           -H "Accept: application/vnd.github.v3+json" \
           -u "user:$TOKEN" \
           --data "{\"event_type\": \"$EVENT_TYPE\",
