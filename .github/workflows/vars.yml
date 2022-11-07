@@ -21,7 +21,9 @@ jobs:
     
     - name: "Check repo name"
       if: $${{ github.repository == 'Adimoldovanxx/sandbox' }}
-      run: echo "It's a match!"
+      run: |
+        echo $${{ github.repository }}
+        echo "It's a match!"
 
     - name: Print env variables for ${{ matrix.group }}
       run: |
