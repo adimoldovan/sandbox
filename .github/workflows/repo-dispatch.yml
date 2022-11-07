@@ -17,7 +17,7 @@ jobs:
         run: |
           curl -X POST https://api.github.com/repos/adimoldovan/demo-ui-tests-playwright-jest/dispatches \
           -H "Accept: application/vnd.github.v3+json" \
-          -u "Authorization: Bearer $TOKEN" \
+          -u "user:$TOKEN" \
           --data "{\"event_type\": \"$GITHUB_EVENT_NAME $GITHUB_REPOSITORY $GITHUB_REF_NAME $GITHUB_REF_TYPE\",
           \"client_payload\": {
           \"repository\": \"$GITHUB_REPOSITORY\",
