@@ -1,8 +1,8 @@
 name: Repository dispatch
 
 on:
-  create
-  push
+  create:
+  push:
 
 jobs:
   run-tests:
