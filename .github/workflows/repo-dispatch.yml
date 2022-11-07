@@ -1,0 +1,27 @@
+name: End to end tests
+
+on:
+  create
+  push
+
+jobs:
+  run-tests:
+    name: "Trigger e2e tests in other repo"
+    runs-on: ubuntu-latest
+    if: github.repository == 'adimoldovan/sandbox'
+
+    steps:
+      - name: Create a repository dispatch
+        env:
+          TOKEN: ${{ secrets.REPO_DISPATCH_TOKEN }}
+          EVENT_TYPE: ${{ github.event_name }}
+        run: |
+          curl -X POST https://api.github.com/repos/adimoldovan/demo-ui-tests-playwright-test \
+          -H "Accept: application/vnd.github.v3+json" \
+          -u "user:$TOKEN" \
+          --data "{\"event_type\": \"$EVENT_TYPE\",
+          \"client_payload\": {
+          \"repository\": \"$GITHUB_REPOSITORY\",
+          \"ref_name\": \"$GITHUB_REF_NAME\",
+          \"ref_type\": \"$GITHUB_REF_TYPE\"
+          }}"
