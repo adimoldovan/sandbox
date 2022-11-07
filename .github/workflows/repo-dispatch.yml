@@ -1,7 +1,6 @@
 name: Repository dispatch
 
 on:
-  create:
   push:
 
 jobs:
