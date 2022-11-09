@@ -18,7 +18,7 @@ jobs:
           repository: adimoldovan/demo-ui-tests-playwright-jest
           event-type: e2e tests $GITHUB_EVENT_NAME $GITHUB_REPOSITORY $GITHUB_REF_NAME $GITHUB_REF_TYPE
           client-payload: '{
-          \"repository\": \"$GITHUB_REPOSITORY\",
-          \"ref_name\": \"$GITHUB_REF_NAME\",
-          \"ref_type\": \"$GITHUB_REF_TYPE\"
+          "repository": "$GITHUB_REPOSITORY",
+          "ref_name": "$GITHUB_REF_NAME",
+          "ref_type": "$GITHUB_REF_TYPE"
           }}'
