@@ -12,15 +12,13 @@ jobs:
 
     steps:
       - name: Create a repository dispatch
-        env:
-          TOKEN: ${{ secrets.REPO_DISPATCH_TOKEN }}
-        run: |
-          curl -X POST https://api.github.com/repos/adimoldovan/demo-ui-tests-playwright-jest/dispatches \
-          -H "Accept: application/vnd.github.v3+json" \
-          -u "user:$TOKEN" \
-          --data "{\"event_type\": \"e2e tests: $GITHUB_EVENT_NAME $GITHUB_REPOSITORY $GITHUB_REF_NAME $GITHUB_REF_TYPE\",
-          \"client_payload\": {
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+          repository: adimoldovan/demo-ui-tests-playwright-jest
+          event-type: 'e2e tests: $GITHUB_EVENT_NAME $GITHUB_REPOSITORY $GITHUB_REF_NAME $GITHUB_REF_TYPE'
+          client-payload: '{
           \"repository\": \"$GITHUB_REPOSITORY\",
           \"ref_name\": \"$GITHUB_REF_NAME\",
           \"ref_type\": \"$GITHUB_REF_TYPE\"
-          }}"
+          }}'
