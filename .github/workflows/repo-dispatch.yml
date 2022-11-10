@@ -17,4 +17,4 @@ jobs:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: adimoldovan/sandbox2
           event-type: e2e tests at ${{github.event_name}} on ${{github.repository}} ${{github.ref_name}} ${{github.ref_type}}
-          client-payload: '{"repository": "${{github.repository}}", "ref_name": "${{github.ref_name}}", "ref_type": "${{github.ref_type}}"}'
+          client-payload: '{"repository": "${{github.repository}}", "ref_name": "${{github.ref_name}}", "ref_type": "${{github.ref_type}}", "sha": "${{github.sha}}"}'
