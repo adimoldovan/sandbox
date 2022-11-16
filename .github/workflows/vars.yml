@@ -38,7 +38,7 @@ jobs:
         echo "GITHUB_JOB $GITHUB_JOB"
         echo "GITHUB_TRIGGERING_ACTOR $GITHUB_TRIGGERING_ACTOR"
         DIFF="$(jq -r '"\( .pull_request.base.sha )...\( .pull_request.head.sha )"' "$GITHUB_EVENT_PATH")"
-        echo "$DIFF"
+        echo "diff: $DIFF"
         
     - name: Upload event.json
       uses: actions/upload-artifact@v2
