@@ -37,7 +37,8 @@ jobs:
         echo "GITHUB_ACTION $GITHUB_ACTION"
         echo "GITHUB_JOB $GITHUB_JOB"
         echo "GITHUB_TRIGGERING_ACTOR $GITHUB_TRIGGERING_ACTOR"
-
+        DIFF="$(jq -r '"\( .pull_request.base.sha )...\( .pull_request.head.sha )"' "$GITHUB_EVENT_PATH")"
+        echo "$DIFF"
         
     - name: Upload event.json
       uses: actions/upload-artifact@v2
@@ -51,3 +52,4 @@ jobs:
         echo "$GITHUB_CONTEXT"
         echo "PR number: ${{ github.event.pull_request.number }}"
         echo "Ref: ${{ github.ref }}"
+        
