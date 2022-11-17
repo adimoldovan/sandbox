@@ -35,6 +35,7 @@ jobs:
     
     - name: Run ${{ matrix.name }} tests
       run: |
+        echo ${{ fromJson(matrix) }}
         echo "$PRE_CONNECTION"
         echo ${{ env.PRE_CONNECTION }}
         # if [ ${{ matrix.name }} == 2 ]; then exit 1; fi
