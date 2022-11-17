@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        group: [ 'pre-connection', 'connection', 'post-connection', 'gutenberg' ]
+        group: [ 'pre-connection', 'post-connection' ]
     env:
       GUTENBERG: bundle
         
@@ -23,7 +23,7 @@ jobs:
     
     - name: Run ${{ matrix.group }} tests
       run: |
-        echo ${{ matrix }}
+        echo ${{ toJson(matrix) }}
         echo "$GUTENBERG"
         echo ${{ env.GUTENBERG }}
         # if [ ${{ matrix.group }} == gutenberg ]; then exit 1; fi
