@@ -23,21 +23,18 @@ jobs:
       fail-fast: false
       matrix:
         include: ${{fromJson( needs.create-matrix.outputs.matrix )}}
-    env:
-      GUTENBERG: bundle
         
     steps:
     - uses: actions/checkout@v2
     
     - name: Set env value
       run: |
+        echo "Name: ${{matrix.name}}"
+        echo "Id: ${{matrix.id}}"
         if [ ${{ matrix.id }} == 1 ]; then echo "PRE_CONNECTION=true" >> $GITHUB_ENV; fi
     
-    - name: Run ${{ matrix.group }} tests
-      env:
-        MATRIX: ${{ matrix }}
+    - name: Run ${{ matrix.name }} tests
       run: |
-        echo $MATRIX
         echo "$PRE_CONNECTION"
         echo ${{ env.PRE_CONNECTION }}
         # if [ ${{ matrix.name }} == 2 ]; then exit 1; fi
