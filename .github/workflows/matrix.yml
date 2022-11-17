@@ -22,8 +22,10 @@ jobs:
         if [ ${{ matrix.group }} == gutenberg ]; then echo "GUTENBERG=latest" >> $GITHUB_ENV; fi
     
     - name: Run ${{ matrix.group }} tests
+      env:
+        MATRIX: ${{ matrix }}
       run: |
-        echo ${{ toJson(matrix) }}
+        echo $MATRIX
         echo "$GUTENBERG"
         echo ${{ env.GUTENBERG }}
         # if [ ${{ matrix.group }} == gutenberg ]; then exit 1; fi
