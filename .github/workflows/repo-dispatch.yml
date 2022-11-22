@@ -13,7 +13,25 @@ jobs:
     steps:
       - name: Set environment
         run: |
-          echo "EVENT_TYPE=$GITHUB_RUN_ID at $GITHUB_EVENT_NAME on $GITHUB_REPOSITORY" >> "$GITHUB_ENV"
+          |
+          REPOSITORY=$GITHUB_REPOSITORY
+
+          if [ "$GITHUB_EVENT_NAME" == pull_request ]; then
+            BRANCH=$GITHUB_HEAD_REF
+          else if [ "$GITHUB_EVENT_NAME" == repository_dispatch ]; then
+            BRANCH=${{ github.event.client_payload.ref_name }}
+            REPOSITORY=${{ github.event.client_payload.repository }}
+          else
+            BRANCH=${GITHUB_REF:11}
+          fi
+
+          {
+            echo "EVENT_TYPE=e2e run $GITHUB_RUN_ID at $GITHUB_EVENT_NAME on $GITHUB_REPOSITORY"
+            "REPOSITORY=$REPOSITORY"
+            "BRANCH=$BRANCH"
+            "PR_TITLE=${{ github.event.pull_request.title }}"
+            "PR_NUMBER=${{ github.event.pull_request.number }}"
+          } >> "$GITHUB_ENV"
         
       - name: Create a repository dispatch
         uses: peter-evans/repository-dispatch@v2
@@ -21,4 +39,4 @@ jobs:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: adimoldovan/sandbox2
           event-type: ${{ env.EVENT_TYPE }}
-          client-payload: '{"repository": "${{github.repository}}", "ref_name": "${{github.ref_name}}", "ref_type": "${{github.ref_type}}", "sha": "${{github.sha}}"}'
+          client-payload: '{"repository": "${{env.REPOSITORY}}", "branch": "${{env.BRANCH}}", "pr_title": "${{env.PR_TITLE}}, "pr_number": "${{env.PR_NUMBER}}, "report_name": ""}'
