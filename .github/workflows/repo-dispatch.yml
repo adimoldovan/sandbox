@@ -13,11 +13,11 @@ jobs:
     steps:
       - name: Set environment
         run: |
-          REPOSITORY=$GITHUB_REPOSITORY
+          REPOSITORY="$GITHUB_REPOSITORY"
 
           if [ "$GITHUB_EVENT_NAME" == pull_request ]; then
             BRANCH=$GITHUB_HEAD_REF
-          else if [ "$GITHUB_EVENT_NAME" == repository_dispatch ]; then
+          elif [ "$GITHUB_EVENT_NAME" == repository_dispatch ]; then
             BRANCH=${{ github.event.client_payload.ref_name }}
             REPOSITORY=${{ github.event.client_payload.repository }}
           else
