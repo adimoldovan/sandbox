@@ -25,8 +25,8 @@ jobs:
           fi
 
           {
-            echo "EVENT_TYPE=e2e run $GITHUB_RUN_ID at $GITHUB_EVENT_NAME on \"$GITHUB_REPOSITORY\""
-            "REPOSITORY=$REPOSITORY"
+            echo "EVENT_TYPE=e2e run $GITHUB_RUN_ID at $GITHUB_EVENT_NAME on $GITHUB_REPOSITORY"
+            "REPOSITORY=\"$REPOSITORY\""
             "BRANCH=$BRANCH"
             "PR_TITLE=${{ github.event.pull_request.title }}"
             "PR_NUMBER=${{ github.event.pull_request.number }}"
