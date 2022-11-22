@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Set environment
         run: |
-          REPOSITORY="$GITHUB_REPOSITORY"
+          REPOSITORY=$GITHUB_REPOSITORY
 
           if [ "$GITHUB_EVENT_NAME" == pull_request ]; then
             BRANCH=$GITHUB_HEAD_REF
@@ -24,17 +24,17 @@ jobs:
             BRANCH=${GITHUB_REF:11}
           fi
 
-          
-            echo "EVENT_TYPE=e2e run $GITHUB_RUN_ID at $GITHUB_EVENT_NAME on $GITHUB_REPOSITORY" >> "$GITHUB_ENV"
-            echo "REPOSITORY=$REPOSITORY" >> "$GITHUB_ENV"
-            echo "BRANCH=$BRANCH" >> "$GITHUB_ENV"
+          {
+            echo "EVENT_TYPE=e2e run $GITHUB_RUN_ID at $GITHUB_EVENT_NAME on $GITHUB_REPOSITORY"
+            "REPOSITORY=$REPOSITORY"
+            "BRANCH=$BRANCH"
+            "PR_TITLE=${{ github.event.pull_request.title }}"
+            "PR_NUMBER=${{ github.event.pull_request.number }}"
+          } >> "$GITHUB_ENV"
           
         
       - name: Create a repository dispatch
         uses: peter-evans/repository-dispatch@v2
-        env:
-          PR_TITLE: ${{ github.event.pull_request.title }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
         with:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: adimoldovan/sandbox2
