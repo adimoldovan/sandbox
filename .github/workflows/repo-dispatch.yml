@@ -14,7 +14,7 @@ jobs:
       - name: Create a repository dispatch
         uses: peter-evans/repository-dispatch@v2
         env:
-          EVENT_TYPE: e2e tests run $GITHUB_RUN_ID at ${{ GITHUB_EVENT_NAME }} on ${{ env.GITHUB_REPOSITORY }}
+          EVENT_TYPE: e2e tests run $GITHUB_RUN_ID at ${{ $GITHUB_EVENT_NAME }} on ${{ env.GITHUB_REPOSITORY }}
         with:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: adimoldovan/sandbox2
