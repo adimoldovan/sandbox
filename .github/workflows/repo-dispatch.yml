@@ -38,4 +38,4 @@ jobs:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: adimoldovan/sandbox2
           event-type: ${{ env.EVENT_TYPE }}
-          client-payload: '{"repository": "${{env.REPOSITORY}}", "branch": "${{env.BRANCH}}", "pr_title": "${{env.PR_TITLE}}", "pr_number": "${{env.PR_NUMBER}}", "run_id": "${{GITHUB_RUN_ID}}"}'
+          client-payload: '{"repository": "${{env.REPOSITORY}}", "branch": "${{env.BRANCH}}", "pr_title": "${{env.PR_TITLE}}", "pr_number": "${{env.PR_NUMBER}}", "run_id": "${{github.GITHUB_RUN_ID}}"}'
