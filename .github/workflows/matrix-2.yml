@@ -9,7 +9,7 @@ jobs:
     outputs:
       matrix: ${{ steps.evaluate.outputs.matrix }}
     env:
-      LOCAL_PATH: ".github/actions"
+      LOCAL_PATH: ".github/workflows"
       
     steps:
     - uses: actions/checkout@v2
@@ -33,4 +33,8 @@ jobs:
         
     steps:
     - uses: actions/checkout@v2
+    - name: "Replace"
+      run: |
+        FN=${{ matrix.file }}
+        echo ${FN//-/_}
   
