@@ -17,7 +17,7 @@ jobs:
     - name: Create matrix
       id: evaluate
       run: |
-          MATRIX="$(ls -m ${{ env.LOCAL_PATH }} | jq -Rnc '[inputs]')"
+          MATRIX="$(ls -m ${{ env.LOCAL_PATH }} | jq -Rnc 'inputs | split(",")')"
           echo "$MATRIX"
           ##echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
           echo "::set-output name=matrix::$MATRIX"
