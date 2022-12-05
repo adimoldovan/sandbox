@@ -9,7 +9,7 @@ jobs:
     outputs:
       matrix: ${{ steps.evaluate.outputs.matrix }}
     env:
-      LOCAL_PATH: .github
+      LOCAL_PATH: "/home/runner/work/sandbox/sandbox"
       
     steps:
     - name: Create matrix
