@@ -9,7 +9,7 @@ jobs:
     outputs:
       matrix: ${{ steps.evaluate.outputs.matrix }}
     env:
-      LOCAL_PATH: src
+      LOCAL_PATH: .
       
     steps:
     - name: Create matrix
