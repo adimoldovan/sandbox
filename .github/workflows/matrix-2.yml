@@ -9,12 +9,13 @@ jobs:
     outputs:
       matrix: ${{ steps.evaluate.outputs.matrix }}
     env:
-      LOCAL_PATH: .
+      LOCAL_PATH: .github
       
     steps:
     - name: Create matrix
       id: evaluate
       run: |
+          pwd
           MATRIX="$(ls -m ${{ env.LOCAL_PATH }})"
           echo "$MATRIX"
           echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
