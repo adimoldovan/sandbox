@@ -37,8 +37,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: "Replace"
       run: |
-        echo ${FN//-/_}
-        RULE_NAME="rule_${env.FN//-/_}"
+        RULE_NAME="rule_${FN//-/_}"
         echo "$RULE_NAME"
-        echo "RULE_NAME=rule_${env.FN//-/_}" >> $GITHUB_ENV
+        echo "RULE_NAME=$RULE_NAME" >> $GITHUB_ENV
   
