@@ -9,7 +9,7 @@ jobs:
     outputs:
       matrix: ${{ steps.evaluate.outputs.matrix }}
     env:
-      LOCAL_PATH: "src"
+      LOCAL_PATH: ".github/actions"
       
     steps:
     - uses: actions/checkout@v2
