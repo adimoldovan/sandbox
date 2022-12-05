@@ -17,11 +17,10 @@ jobs:
     - name: Create matrix
       id: evaluate
       run: |
-          pwd
-          ls -m
           MATRIX="$(ls -m ${{ env.LOCAL_PATH }})"
           echo "$MATRIX"
-          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+          ##echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+          echo "::set-output name=matrix::$MATRIX"
           
   matrix-job:
     name: "Run with ${{ matrix.file }} matrix value"
