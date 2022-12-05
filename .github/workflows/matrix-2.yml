@@ -16,6 +16,7 @@ jobs:
       id: evaluate
       run: |
           pwd
+          ls -m
           MATRIX="$(ls -m ${{ env.LOCAL_PATH }})"
           echo "$MATRIX"
           echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
