@@ -30,11 +30,15 @@ jobs:
       fail-fast: false
       matrix:
         file: ${{fromJson( needs.create-matrix.outputs.matrix )}}
+    env:
+      FN: ${{ matrix.file }}
         
     steps:
     - uses: actions/checkout@v2
     - name: "Replace"
       run: |
-        FN=${{ matrix.file }}
         echo ${FN//-/_}
+        RULE_NAME="rule_${env.FN//-/_}"
+        echo "$RULE_NAME"
+        echo "RULE_NAME=rule_${env.FN//-/_}" >> $GITHUB_ENV
   
