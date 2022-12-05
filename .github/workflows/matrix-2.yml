@@ -9,9 +9,11 @@ jobs:
     outputs:
       matrix: ${{ steps.evaluate.outputs.matrix }}
     env:
-      LOCAL_PATH: "/home/runner/work/sandbox/sandbox"
+      LOCAL_PATH: "src"
       
     steps:
+    - uses: actions/checkout@v2
+    
     - name: Create matrix
       id: evaluate
       run: |
