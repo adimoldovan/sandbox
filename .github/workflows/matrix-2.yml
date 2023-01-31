@@ -1,0 +1,43 @@
+name: Test matrix 2
+
+on:
+  push:
+
+jobs:
+  create-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.evaluate.outputs.matrix }}
+    env:
+      LOCAL_PATH: ".github/workflows"
+      
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Create matrix
+      id: evaluate
+      run: |
+          MATRIX="$(ls -m ${{ env.LOCAL_PATH }} | jq -Rnc 'inputs | split(", ")')"
+          echo "$MATRIX"
+          ##echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+          echo "::set-output name=matrix::$MATRIX"
+          
+  matrix-job:
+    name: "Run with ${{ matrix.file }} matrix value"
+    runs-on: ubuntu-latest
+    needs: create-matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        file: ${{fromJson( needs.create-matrix.outputs.matrix )}}
+    env:
+      FN: ${{ matrix.file }}
+        
+    steps:
+    - uses: actions/checkout@v2
+    - name: "Replace"
+      run: |
+        RULE_NAME="rule_${FN//-/_}"
+        echo "$RULE_NAME"
+        echo "RULE_NAME=$RULE_NAME" >> $GITHUB_ENV
+  

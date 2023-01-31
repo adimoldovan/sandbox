@@ -4,28 +4,44 @@ on:
   push:
 
 jobs:
-  matrix-job:
-    name: "Run with ${{ matrix.group }} matrix value"
+  create-matrix:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.evaluate.outputs.matrix }}
+    steps:
+    - name: Create matrix
+      id: evaluate
+      run: |
+          MATRIX='[{name: "pre-connection", id: "1"},{name: "post-connection", id: "2"}]'
+          echo "$MATRIX"
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+  matrix-job:
+    name: "Run with ${{ matrix.name }} matrix value"
+    runs-on: ubuntu-latest
+    needs: create-matrix
     strategy:
       fail-fast: false
       matrix:
-        group: [ 'pre-connection', 'connection', 'post-connection', 'gutenberg' ]
-    env:
-      GUTENBERG: bundle
+        include: ${{fromJson( needs.create-matrix.outputs.matrix )}}
         
     steps:
     - uses: actions/checkout@v2
     
     - name: Set env value
       run: |
-        if [ ${{ matrix.group }} == gutenberg ]; then echo "GUTENBERG=latest" >> $GITHUB_ENV; fi
+        echo "Name: ${{matrix.name}}"
+        echo "Id: ${{matrix.id}}"
+        if [ ${{ matrix.id }} == 1 ]; then echo "PRE_CONNECTION=true" >> $GITHUB_ENV; fi
     
-    - name: Run ${{ matrix.group }} tests
+    - name: Run ${{ matrix.name }} tests
+      env:
+        RUN_ID: ${{ matrix.id }}
       run: |
-        echo "$GUTENBERG"
-        echo ${{ env.GUTENBERG }}
-        # if [ ${{ matrix.group }} == gutenberg ]; then exit 1; fi
+        echo "$PRE_CONNECTION"
+        echo ${{ env.PRE_CONNECTION }}
+        echo $RUN_ID >> metadata.json
+        cat metadata.json
+        # if [ ${{ matrix.name }} == 2 ]; then exit 1; fi
   
   conditional-job:
     name: "Report"
