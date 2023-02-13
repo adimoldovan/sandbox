@@ -49,7 +49,7 @@ jobs:
   conditional-job:
     name: "Report"
     runs-on: ubuntu-latest
-    if: ${{ needs.matrix-job.result == 'success' || needs.matrix-job.result == 'failure' }}
+    if: ${{ ! cancelled() }}
     needs: [matrix-job]
 
     steps:
