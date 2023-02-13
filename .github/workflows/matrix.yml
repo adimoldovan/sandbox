@@ -15,7 +15,7 @@ jobs:
           MATRIX='[{name: "pre-connection", id: "1"},{name: "post-connection", id: "2"}]'
           echo "$MATRIX"
           echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
-#          echo "matrix='[]'" >> "$GITHUB_OUTPUT"
+          echo "matrix='[]'" >> "$GITHUB_OUTPUT"
   matrix-job:
     name: "Run with ${{ matrix.name }} matrix value"
     runs-on: ubuntu-latest
@@ -57,6 +57,5 @@ jobs:
 
     - name: Notify
       run: |
-        echo 'I ran because the previous job was successful'
         echo ${{ needs.matrix-job.result }}
   
