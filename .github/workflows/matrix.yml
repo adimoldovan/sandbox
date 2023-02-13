@@ -48,6 +48,7 @@ jobs:
     name: "Report"
     runs-on: ubuntu-latest
     if: ${{ needs.matrix-job.result == 'success' || needs.matrix-job.result == 'failure' }}
+    needs: [matrix-job]
     
     steps:
     - uses: actions/checkout@v2
