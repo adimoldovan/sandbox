@@ -42,7 +42,9 @@ jobs:
         echo ${{ env.PRE_CONNECTION }}
         echo $RUN_ID >> metadata.json
         cat metadata.json
-         if [ ${{ matrix.name }} == 2 ]; then exit 1; fi
+        
+        # fail
+        if [ ${{ matrix.id }} == 2 ]; then exit 1; fi
 
   conditional-job:
     name: "Report"
