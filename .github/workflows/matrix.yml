@@ -3,6 +3,10 @@ name: Test matrix
 on:
   push:
 
+concurrency:
+  group: matrix-${{ github.event_name }}-${{ github.ref }}-${{ github.event.action }}
+  cancel-in-progress: true
+
 jobs:
   create-matrix:
     runs-on: ubuntu-latest
