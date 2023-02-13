@@ -14,7 +14,7 @@ jobs:
       run: |
           MATRIX='[{name: "pre-connection", id: "1"},{name: "post-connection", id: "2"}]'
           echo "$MATRIX"
-          # echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+           echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
           echo "matrix='[]'" >> "$GITHUB_OUTPUT"
   matrix-job:
     name: "Run with ${{ matrix.name }} matrix value"
@@ -24,16 +24,16 @@ jobs:
       fail-fast: false
       matrix:
         include: ${{fromJson( needs.create-matrix.outputs.matrix )}}
-        
+
     steps:
     - uses: actions/checkout@v2
-    
+
     - name: Set env value
       run: |
         echo "Name: ${{matrix.name}}"
         echo "Id: ${{matrix.id}}"
         if [ ${{ matrix.id }} == 1 ]; then echo "PRE_CONNECTION=true" >> $GITHUB_ENV; fi
-    
+
     - name: Run ${{ matrix.name }} tests
       env:
         RUN_ID: ${{ matrix.id }}
@@ -42,17 +42,17 @@ jobs:
         echo ${{ env.PRE_CONNECTION }}
         echo $RUN_ID >> metadata.json
         cat metadata.json
-        # if [ ${{ matrix.name }} == 2 ]; then exit 1; fi
-  
+         if [ ${{ matrix.name }} == 2 ]; then exit 1; fi
+
   conditional-job:
     name: "Report"
     runs-on: ubuntu-latest
     if: ${{ needs.matrix-job.result == 'success' || needs.matrix-job.result == 'failure' }}
     needs: [matrix-job]
-    
+
     steps:
     - uses: actions/checkout@v2
-    
+
     - name: Notify
       run: |
         echo 'I ran because the previous job was successful'
