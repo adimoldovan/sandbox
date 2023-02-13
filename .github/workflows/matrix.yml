@@ -47,7 +47,7 @@ jobs:
   conditional-job:
     name: "Report"
     runs-on: ubuntu-latest
-    if: ${{ needs.matrix-job.result != 'cancelled' }}
+    if: ${{ needs.matrix-job.result == 'success' || needs.matrix-job.result == 'failure' }}
     
     steps:
     - uses: actions/checkout@v2
