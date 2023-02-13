@@ -44,7 +44,7 @@ jobs:
         cat metadata.json
         
         # fail
-        if [ ${{ matrix.id }} == 2 ]; then exit 1; fi
+#        if [ ${{ matrix.id }} == 2 ]; then exit 1; fi
 
   conditional-job:
     name: "Report"
