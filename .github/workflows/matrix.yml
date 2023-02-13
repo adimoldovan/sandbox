@@ -47,7 +47,7 @@ jobs:
         echo $RUN_ID >> metadata.json
         cat metadata.json
         
-        # fail
+        # fail fail fail
 #        if [ ${{ matrix.id }} == 2 ]; then exit 1; fi
 
   conditional-job:
