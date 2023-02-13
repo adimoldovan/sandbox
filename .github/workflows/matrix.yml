@@ -47,6 +47,7 @@ jobs:
   conditional-job:
     name: "Report"
     runs-on: ubuntu-latest
+    if: ${{ ! cancelled() needs.matrix-job }}
     needs: [matrix-job]
     
     steps:
