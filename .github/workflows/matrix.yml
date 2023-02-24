@@ -38,7 +38,7 @@ jobs:
         echo "Id: ${{matrix.id}}"
         if [ ${{ matrix.id }} == 1 ]; then echo "PRE_CONNECTION=true" >> $GITHUB_ENV; fi
         
-        if [ ${{ matrix.id }} == *connection ]; then echo "connection tests"; fi
+        if [ ${{ matrix.name }} == *connection ]; then echo "connection tests"; fi
 
     - name: Run ${{ matrix.name }} tests
       env:
