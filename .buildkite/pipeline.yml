@@ -14,3 +14,4 @@ steps:
 
       - label: "Run tests"
         command: echo "run tests"
+        if: build.pull_request.id != null || build.pull_request.draft
