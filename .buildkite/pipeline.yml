@@ -18,7 +18,7 @@ steps:
           - "smoke-2"
         env:
           SUITE: "{{matrix}}"
-        command: echo "running $SUITE, job $BUILDKITE_PARALLEL_JOB out of $BUILDKITE_PARALLEL_JOB_COUNT"
+        command: echo "running $$SUITE, job $$BUILDKITE_PARALLEL_JOB out of $$BUILDKITE_PARALLEL_JOB_COUNT"
 
       - label: "Conditional tests run"
         commands: | 
