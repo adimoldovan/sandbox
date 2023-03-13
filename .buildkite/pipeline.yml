@@ -16,4 +16,4 @@ steps:
         commands: | 
           echo "run tests"
           echo "$build"
-        if: build.pull_request.id != null || build.pull_request.draft
+        if: build.pull_request.id != null || !build.pull_request.draft
