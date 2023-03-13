@@ -12,7 +12,11 @@ steps:
       - label: "Prepare tests"
         command: echo "prepare tests"
         
-      - label: "Parallel test job: {{matrix}}"
+      - label: "Parallel test job with parallelism"
+        parallelism: 2
+        command: echo "running job $$BUILDKITE_PARALLEL_JOB out of $$BUILDKITE_PARALLEL_JOB_COUNT"
+        
+      - label: "Parallel test job with matrix: {{matrix}}"
         matrix:
           - "smoke-1"
           - "smoke-2"
