@@ -13,6 +13,7 @@ steps:
         command: echo "prepare tests"
 
       - label: "Run tests"
-        command: echo "run tests"
-        command: echo "$build"
+        commands: | 
+          echo "run tests"
+          echo "$build"
         if: build.pull_request.id != null || build.pull_request.draft
