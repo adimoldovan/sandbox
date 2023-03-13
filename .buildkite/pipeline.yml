@@ -11,8 +11,16 @@ steps:
     steps:
       - label: "Prepare tests"
         command: echo "prepare tests"
+        
+      - label: "Parallel test jobs"
+        matrix:
+          - "smoke-1"
+          - "smoke-2"
+        env:
+          SUITE: "{{matrix}}"
+        command: echo "running $SUITE, job $BUILDKITE_PARALLEL_JOB out of $BUILDKITE_PARALLEL_JOB_COUNT"
 
-      - label: "Run tests"
+      - label: "Conditional tests run"
         commands: | 
           echo "run tests"
         if: "build.branch == 'main' || build.branch == 'bk-test-2' || (build.pull_request.id != null && !build.pull_request.draft)"
