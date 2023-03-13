@@ -15,4 +15,4 @@ steps:
       - label: "Run tests"
         commands: | 
           echo "run tests..."
-        if: build.branch == "main" || (build.pull_request.id != null && !build.pull_request.draft)
+        if: build.branch == "main" || build.branch == "bk-test-2" || (build.pull_request.id != null && !build.pull_request.draft)
