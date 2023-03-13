@@ -9,8 +9,8 @@ steps:
 
   - group: "Test"
     steps:
-      - label: "Prepare test"
+      - label: "Prepare tests"
         command: echo "prepare tests"
 
-      - label: "Run test"
+      - label: "Run tests"
         command: echo "run tests"
