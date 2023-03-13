@@ -9,11 +9,10 @@ steps:
 
   - group: "Test"
     steps:
-      - label: "Prepare test"
+      - label: "Prepare tests"
         command: echo "prepare tests"
 
       - label: "Run tests"
         commands: | 
           echo "run tests"
-          echo "$build"
         if: build.branch == "main" || (build.pull_request.id != null && !build.pull_request.draft)
