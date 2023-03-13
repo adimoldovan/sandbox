@@ -12,7 +12,7 @@ steps:
       - label: "Prepare tests"
         command: echo "prepare tests"
         
-      - label: "Parallel test jobs"
+      - label: "Parallel test job: {{matrix}}"
         matrix:
           - "smoke-1"
           - "smoke-2"
