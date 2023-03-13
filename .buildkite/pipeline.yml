@@ -1,0 +1,16 @@
+steps:
+  - group: "Build"
+    steps:
+      - label: "Prepare"
+        command: echo "prepare build"
+
+      - label: "Build"
+        command: echo "run build"
+
+  - group: "Test"
+    steps:
+      - label: "Prepare test"
+        command: echo "prepare tests"
+
+      - label: "Run test"
+        command: echo "run tests"
