@@ -33,6 +33,6 @@ steps:
   - group: "External pipeline"
     steps: 
       - label: "Pipeline 2"
-      - command: buildkite-agent pipeline upload .buildkite/pipeline-2.yml
+        command: buildkite-agent pipeline upload .buildkite/pipeline-2.yml
         
    
