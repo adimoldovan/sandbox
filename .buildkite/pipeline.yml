@@ -30,6 +30,9 @@ steps:
           echo "run tests"
         if: "build.branch == 'main' || build.branch == 'bk-test-2' || (build.pull_request.id != null && !build.pull_request.draft)"
         
-  - command: buildkite-agent pipeline upload .buildkite/pipeline-2.yml
+  - group: "External pipeline"
+    - steps: 
+      - label: "Pipeline 2"
+      - command: buildkite-agent pipeline upload .buildkite/pipeline-2.yml
         
    
