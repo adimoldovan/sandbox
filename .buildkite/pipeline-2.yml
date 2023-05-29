@@ -1,0 +1,18 @@
+steps:
+  - group: "Deploy"
+    steps:
+      - label: "Prepare deploy"
+        command: echo "prepare build"
+
+      - label: "Deploy"
+        command: echo "run build"
+
+  - group: "Test deployed app"
+    steps:
+      - label: "Prepare tests"
+        command: echo "prepare tests"
+        
+      - label: "Run tests"
+        commands: | 
+          echo "run tests"
+        
