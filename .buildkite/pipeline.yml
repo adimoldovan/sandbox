@@ -29,3 +29,9 @@ steps:
         commands: | 
           echo "run tests"
         if: "build.branch == 'main' || build.branch == 'bk-test-2' || (build.pull_request.id != null && !build.pull_request.draft)"
+        
+      - label: "External pipeline tests run"
+        commands: | 
+          echo "run another pipeline?"
+        
+   
