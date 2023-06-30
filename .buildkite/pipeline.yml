@@ -16,7 +16,7 @@ steps:
         parallelism: 2
         command: |
           echo "running job $$BUILDKITE_PARALLEL_JOB out of $$BUILDKITE_PARALLEL_JOB_COUNT"
-          echo "artifact for $$BUILDKITE_PARALLEL_JOB out of $$BUILDKITE_PARALLEL_JOB_COUNT retry $$BUILDKITE_RETRY_COUNT"
+          echo "artifact for $$BUILDKITE_PARALLEL_JOB out of $$BUILDKITE_PARALLEL_JOB_COUNT retry $$BUILDKITE_RETRY_COUNT" > artifact.txt
         
       - label: "Parallel test job with matrix: {{matrix}}"
         matrix:
