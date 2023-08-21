@@ -32,6 +32,13 @@ steps:
         commands: | 
           echo "run tests"
         if: "build.branch == 'main' || build.branch == 'bk-test-2' || (build.pull_request.id != null && !build.pull_request.draft)"
+
+  - label: "Auto retry job"
+    command: echo "BUILDKITE_BUILD_ID: $$BUILDKITE_BUILD_ID, BUILDKITE_BUILD_NUMBER: $$BUILDKITE_BUILD_NUMBER,  BUILDKITE_RETRY_COUNT: $$BUILDKITE_RETRY_COUNT" > output.txt
+    artifact_paths: [ "output.txt" ]
+    retry:
+      automatic:
+        limit: 1
         
   - group: "External pipeline"
     steps: 
