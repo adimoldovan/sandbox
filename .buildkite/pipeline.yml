@@ -10,9 +10,7 @@ steps:
   - label: "Auto retry job"
     commands: |
       echo "BUILDKITE_BUILD_ID: $$BUILDKITE_BUILD_ID, BUILDKITE_BUILD_NUMBER: $$BUILDKITE_BUILD_NUMBER,  BUILDKITE_RETRY_COUNT: $$BUILDKITE_RETRY_COUNT" > output.txt
-      if [[ $$BUILDKITE_RETRY_COUNT ]] < 2; then
-        exit 1
-      fi
+      bash ./fail_until.sh
     artifact_paths: [ "output.txt" ]
     retry:
       automatic:
