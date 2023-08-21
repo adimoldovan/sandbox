@@ -1,11 +1,11 @@
 steps:
   - label: "Auto retry job"
     commands: |
-      echo "BUILDKITE_BUILD_ID: $$BUILDKITE_BUILD_ID, BUILDKITE_BUILD_NUMBER: $$BUILDKITE_BUILD_NUMBER,  BUILDKITE_RETRY_COUNT: $$BUILDKITE_RETRY_COUNT" > output.txt
+      echo "BUILDKITE_BUILD_ID: $$BUILDKITE_BUILD_ID, BUILDKITE_BUILD_NUMBER: $$BUILDKITE_BUILD_NUMBER,  BUILDKITE_RETRY_COUNT: $$BUILDKITE_RETRY_COUNT" > "output.txt_$$BUILDKITE_RETRY_COUNT"
       buildkite-agent artifact download "output.txt" . --build "$$BUILDKITE_BUILD_ID" --include-retried-jobs || true
       cat ./output.txt || true
       bash ./.buildkite/fail_until.sh
-    artifact_paths: [ "output.txt" ]
+    artifact_paths: [ "output.txt_*" ]
     retry:
       automatic:
         limit: 2
