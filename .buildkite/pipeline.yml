@@ -1,13 +1,5 @@
 steps:
-  - group: "Build"
-    steps:
-      - label: "Prepare build"
-        command: echo "prepare build"
-
-      - label: "Build"
-        command: echo "run build"
-
-  - label: "Auto retry job"
+ - label: "Auto retry job"
     commands: |
       echo "BUILDKITE_BUILD_ID: $$BUILDKITE_BUILD_ID, BUILDKITE_BUILD_NUMBER: $$BUILDKITE_BUILD_NUMBER,  BUILDKITE_RETRY_COUNT: $$BUILDKITE_RETRY_COUNT" > output.txt
       buildkite-agent artifact download "output.txt" . --build "$$BUILDKITE_BUILD_ID" --include-retried-jobs || true
@@ -17,6 +9,14 @@ steps:
     retry:
       automatic:
         limit: 2
+        
+  - group: "Build"
+    steps:
+      - label: "Prepare build"
+        command: echo "prepare build"
+
+      - label: "Build"
+        command: echo "run build"
 
   - group: "Test"
     steps:
