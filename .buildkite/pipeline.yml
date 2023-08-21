@@ -5,7 +5,7 @@ steps:
       buildkite-agent artifact download "output.txt" . --build "$$BUILDKITE_BUILD_ID" --include-retried-jobs || true
       cat ./output.txt || true
       bash ./.buildkite/fail_until.sh
-    artifact_paths: [ "output.txt" ]
+    artifact_paths: [ "output.txt_$$BUILDKITE_RETRY_COUNT" ]
     retry:
       automatic:
         limit: 2
