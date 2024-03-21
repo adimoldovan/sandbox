@@ -21,6 +21,8 @@ jobs:
           JOBS2='[{name: "job2.1", optional: false}]'
           echo "jobs1=$JOBS1" >> "$GITHUB_OUTPUT"
           echo "jobs2=$JOBS2" >> "$GITHUB_OUTPUT"
+    env:
+      STATUS: ""
 
   matrix-job-1:
     name: "Run 1 - ${{ matrix.name }}"
@@ -44,6 +46,13 @@ jobs:
           if [ ${{ matrix.name }} == "job1.1" ]; then exit 1; fi
           if [ ${{ matrix.name }} == "job1.3" ]; then exit 1; fi
           if [ ${{ matrix.name }} == "job1.5" ]; then exit 1; fi
+
+      - name: Update status
+        if: ${{ (failure() || cancelled()) && matrix.optional == false }}
+        run: |
+          echo "$STATUS"
+          echo "${{job.status}}" >> "$STATUS"
+          echo "$STATUS"
 
       - name: Create result file
         if: ${{ (failure() || cancelled()) && matrix.optional == false }}
@@ -73,7 +82,7 @@ jobs:
           echo "needs context: ${{ toJson(needs) }}"
           
           ls -lh
-          results="$(cat result-*.json | jq -c --slurp .)"
+          results="$(jq --slurp '.' result-*.json)"
           echo $results
           
           echo $result
