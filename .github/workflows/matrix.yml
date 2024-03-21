@@ -74,4 +74,10 @@ jobs:
     steps:
     - name: Notify
       run: |
-        echo ${{ needs.matrix-job.result }}
+        result="${{ needs.*.result }}"
+        echo $result
+
+        if [[ $result != "success" && $result != "skipped" ]]; then
+          echo "One or more api test jobs have failed."
+          exit 1
+        fi
