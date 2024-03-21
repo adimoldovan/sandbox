@@ -80,6 +80,8 @@ jobs:
     steps:
     - name: Evaluate
       run: |
+        evaluation="${{ fromJSON( needs.matrix-job.outputs.evaluation ) }}"
+        echo $evaluation
         if [[ $result != "success" && $result != "skipped" ]]; then
           echo "One or more needed jobs have failed."
           exit 1
