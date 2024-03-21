@@ -17,7 +17,7 @@ jobs:
       - name: Create matrix
         id: evaluate
         run: |
-          JOBS1='[{name: "job1.1", optional: true},{name: "job1.2", optional: true},{name: "job1.3", optional: false},{name: "job1.4", optional: false}]'
+          JOBS1='[{name: "job1.1", optional: true},{name: "job1.2", optional: true},{name: "job1.3", optional: false},{name: "job1.4", optional: false},{name: "job1.5", optional: false}]'
           JOBS2='[{name: "job2.1", optional: false}]'
           echo "jobs1=$JOBS1" >> "$GITHUB_OUTPUT"
           echo "jobs2=$JOBS2" >> "$GITHUB_OUTPUT"
@@ -71,6 +71,7 @@ jobs:
         run: |
           echo "needs context: ${{ toJson(needs) }}"
           
+          ls -lh
           results="$(cat result-*.json | jq -c --slurp .)"
           echo $results
           
