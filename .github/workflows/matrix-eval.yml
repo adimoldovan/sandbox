@@ -14,9 +14,9 @@ jobs:
       jobs1: ${{ steps.evaluate.outputs.jobs1 }}
       jobs2: ${{ steps.evaluate.outputs.jobs2 }}
     steps:
-    - name: Create matrix
-      id: evaluate
-      run: |
+      - name: Create matrix
+        id: evaluate
+        run: |
           JOBS1='[{name: "job1.1", optional: true},{name: "job1.2", optional: true},{name: "job1.3", optional: false},{name: "job1.4", optional: false}]'
           JOBS2='[{name: "job2.1", optional: false}]'
           echo "jobs1=$JOBS1" >> "$GITHUB_OUTPUT"
@@ -25,7 +25,7 @@ jobs:
   matrix-job-1:
     name: "Run 1 - ${{ matrix.name }}"
     runs-on: ubuntu-latest
-    needs: [create-matrix]
+    needs: [ create-matrix ]
     outputs:
       optional: ${{ steps.run.outputs.optional }}
     strategy:
@@ -34,39 +34,40 @@ jobs:
         include: ${{fromJson( needs.create-matrix.outputs.jobs1 )}}
 
     steps:
-    - name: Run
-      id: run
-      run: |
-        echo "Name: ${{matrix}}"
-        echo "matrix-job-1-${{strategy.job-index}}=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
+      - name: Run
+        id: run
+        run: |
+          echo "Name: ${{matrix}}"
+          echo "matrix-job-1-${{strategy.job-index}}=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
+          
+          # fail fail fail
+          if [ ${{ matrix.name }} == "job1.1" ]; then exit 1; fi
+          if [ ${{ matrix.name }} == "job1.3" ]; then exit 1; fi
 
-        # fail fail fail
-        if [ ${{ matrix.name }} == "job1.1" ]; then exit 1; fi
-        if [ ${{ matrix.name }} == "job1.3" ]; then exit 1; fi
-
-    - name: Create resutl file
-      if: ${{always()}}
-      run: echo "${{matrix.optional}}" > matrix-job-1-${{ strategy.job-index }}-${{job.status}}
-    - name: Upload result file
-      uses: actions/upload-artifact@v4
-      with:
-        name: Upload result file for matrix-job-1-${{ strategy.job-index }}
-        path: matrix-job-1-${{ strategy.job-index }}-${{job.status}}
+      - name: Create result file
+        if: ${{always()}}
+        run: echo "${{matrix.optional}}" > matrix-job-1-${{ strategy.job-index }}-${{job.status}}
+        
+      - name: Upload result file
+        uses: actions/upload-artifact@v4
+        with:
+          name: Upload result file for matrix-job-1-${{ strategy.job-index }}
+          path: matrix-job-1-${{ strategy.job-index }}-${{job.status}}
 
   evaluate-job:
     name: "Evaluate"
     runs-on: ubuntu-latest
     if: ${{ always() }}
-    needs: [matrix-job-1]
+    needs: [ matrix-job-1 ]
 
     steps:
-    - name: Evaluate
-      run: |
-        echo "needs context: ${{ toJson(needs) }}"
-
-        result=${{needs.*.result}}
-        echo $result
-        if [[ $result != "success" && $result != "skipped" ]]; then
-          echo "One or more needed jobs have failed."
-          exit 1
-        fi
+      - name: Evaluate
+        run: |
+          echo "needs context: ${{ toJson(needs) }}"
+          
+          result=${{needs.*.result}}
+          echo $result
+          if [[ $result != "success" && $result != "skipped" ]]; then
+            echo "One or more needed jobs have failed."
+            exit 1
+          fi
