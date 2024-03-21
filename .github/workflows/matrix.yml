@@ -47,6 +47,8 @@ jobs:
       run: |
         sleep ${{ matrix.id }}
 
+        echo ${{strategy.job-index}}
+
         echo "$MATRIX_1"
         echo ${{ env.MATRIX_1 }}
         echo $RUN_ID >> metadata.json
@@ -80,7 +82,7 @@ jobs:
     steps:
     - name: Evaluate
       run: |
-        evaluation="${{ needs.matrix-job.outputs.evaluation }}"
+        evaluation="${{ needs.needs.* }}"
         echo $evaluation
 
         result="${{ needs.*.result }}"
