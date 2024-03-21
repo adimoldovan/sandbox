@@ -59,6 +59,12 @@ jobs:
         echo uqname="matrix-job-1-${{strategy.job-index}}"
         echo $uqname
         echo "${{strategy.job-index}}=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
+
+    - name: Upload
+      id: upload
+      if: ${{always}}
+      run: |
+        echo "${{job.status}}"
   
   evaluate-job:
     name: "Evaluate"
