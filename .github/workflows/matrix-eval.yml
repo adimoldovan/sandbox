@@ -52,15 +52,10 @@ jobs:
         if: ${{ always() }}
         run: |
           echo "${{job.status}}" >> $GITHUB_STEP_SUMMARY
-          
-          echo "----"
-          echo "$jobs_status"
-          echo "jobs_status=b" >> "$GITHUB_ENV"
-          echo "$jobs_status"
 
       - name: Create result file
         if: ${{ (failure() || cancelled()) && matrix.optional == false }}
-        run: echo "${{toJson(matrix)}}" > result-matrix-job-1-${{ strategy.job-index }}-${{job.status}}.json
+        run: echo "${{matrix}}" > result-matrix-job-1-${{ strategy.job-index }}-${{job.status}}.json
 
       - name: Upload result file
         if: ${{ (failure() || cancelled()) && matrix.optional == false }}
