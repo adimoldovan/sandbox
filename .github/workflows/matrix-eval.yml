@@ -46,13 +46,13 @@ jobs:
 
       - name: Create result file
         if: ${{ (failure() || cancelled()) && matrix.optional == false }}
-        run: echo "${{matrix}}" > matrix-job-1-${{ strategy.job-index }}-${{job.status}}
+        run: echo "${{toJson(matrix)}}" > matrix-job-1-${{ strategy.job-index }}-${{job.status}}
 
       - name: Upload result file
         if: ${{ (failure() || cancelled()) && matrix.optional == false }}
         uses: actions/upload-artifact@v4
         with:
-          name: matrix-job-1-${{ strategy.job-index }}-${{job.status}}
+          path: matrix-job-1-${{ strategy.job-index }}-${{job.status}}
           if-no-files-found: warn
 
   evaluate-job:
