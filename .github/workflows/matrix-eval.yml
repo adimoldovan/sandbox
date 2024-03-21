@@ -64,6 +64,9 @@ jobs:
 
     steps:
       - uses: actions/download-artifact@v4
+        with:
+          pattern: result-*
+          merge-multiple: true
       - name: Evaluate
         run: |
           echo "needs context: ${{ toJson(needs) }}"
