@@ -37,7 +37,7 @@ jobs:
       - name: Run
         id: run
         run: |
-          echo "Name: ${{matrix}}"
+          echo "Job: ${{ fromJson(matrix) }}"
           echo "matrix-job-1-${{strategy.job-index}}=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
           
           # fail fail fail
@@ -46,14 +46,14 @@ jobs:
 
       - name: Create result file
         if: ${{ failure() || cancelled() }}
-        run: echo "${{matrix.optional}}" > matrix-job-1-${{ strategy.job-index }}-${{job.status}}
+        run: echo "${{fromJson(matrix)}}" > matrix-job-1-${{ strategy.job-index }}-${{job.status}}
 
       - name: Upload result file
         if: ${{ failure() || cancelled() }}
         uses: actions/upload-artifact@v4
         with:
-          name: Upload result file for matrix-job-1-${{ strategy.job-index }}
-          path: matrix-job-1-${{ strategy.job-index }}-${{job.status}}
+          name: matrix-job-1-${{ strategy.job-index }}-${{job.status}}
+          path: results
 
   evaluate-job:
     name: "Evaluate"
@@ -62,11 +62,13 @@ jobs:
     needs: [ matrix-job-1 ]
 
     steps:
+      - uses: actions/download-artifact@v3
       - name: Evaluate
         run: |
           echo "needs context: ${{ toJson(needs) }}"
           
-          result=${{needs.*.result}}
+          results="$(cat */matrix | jq -c --slurp .)"
+          
           echo $result
           if [[ $result != "success" && $result != "skipped" ]]; then
             echo "One or more needed jobs have failed."
