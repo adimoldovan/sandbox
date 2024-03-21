@@ -47,6 +47,7 @@ jobs:
 
       - name: Update status
 #        if: ${{ (failure() || cancelled()) && matrix.optional == false }}
+        if: ${{ always() }}
         run: |
           echo "$jobs_status"
           updated_status="$jobs_status_${{job.status}}"
