@@ -44,15 +44,15 @@ jobs:
         if [ ${{ matrix.name }} == "job1.1" ]; then exit 1; fi
         if [ ${{ matrix.name }} == "job1.3" ]; then exit 1; fi
 
-        echo "${{job.status}}"
-
-    - name: Upload
-      id: upload
+    - name: Create resutl file
       if: ${{always()}}
-      run: |
-        echo "${{job.status}}"
-        echo "${{matrix.optional}}"
-  
+      run: echo "${{matrix.optional}}" > matrix-job-1-${{ strategy.job-index }}-${{job.status}}
+    - name: Upload result file
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build log for job ${{ strategy.job-index }}
+          path: test-job-${{ strategy.job-index }}.txt
+
   evaluate-job:
     name: "Evaluate"
     runs-on: ubuntu-latest
