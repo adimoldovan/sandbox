@@ -46,10 +46,10 @@ jobs:
           if [ ${{ matrix.name }} == "job1.5" ]; then exit 1; fi
 
       - name: Update status
-        if: ${{ (failure() || cancelled()) && matrix.optional == false }}
+#        if: ${{ (failure() || cancelled()) && matrix.optional == false }}
         run: |
           echo "$jobs_status"
-          updated_status="$jobs_statusF"
+          updated_status="$jobs_status_${{job.status}}"
           echo "jobs_status=updated_status" >> "$GITHUB_ENV"
           echo "$jobs_status"
 
