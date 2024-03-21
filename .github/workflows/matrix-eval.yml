@@ -52,7 +52,8 @@ jobs:
         if: ${{ (failure() || cancelled()) && matrix.optional == false }}
         uses: actions/upload-artifact@v4
         with:
-          path: matrix-job-1-${{ strategy.job-index }}-${{job.status}}
+          path: matrix-job-1-${{ strategy.job-index }}-${{job.status}}.result
+          name: matrix-job-1-${{ strategy.job-index }}-${{job.status}}
           if-no-files-found: warn
 
   evaluate-job:
@@ -62,12 +63,12 @@ jobs:
     needs: [ matrix-job-1 ]
 
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
       - name: Evaluate
         run: |
           echo "needs context: ${{ toJson(needs) }}"
           
-          results="$(cat */results | jq -c --slurp .)"
+          results="$(cat *.results | jq -c --slurp .)"
           echo $results
           
           echo $result
