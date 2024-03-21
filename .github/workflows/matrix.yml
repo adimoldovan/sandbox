@@ -36,7 +36,7 @@ jobs:
         echo "Name: ${{matrix.name}}"
         echo "Id: ${{matrix.id}}"
         if [ ${{ matrix.id }} == 1 ]; then echo "MATRIX_1=true" >> $GITHUB_ENV; fi
-        if [[ ${{ matrix.name }} == *matrix ]]; then echo "matrix tests"; fi
+#        if [[ ${{ matrix.name }} == *matrix ]]; then echo "matrix tests"; fi
 
     - name: Run ${{ matrix.name }} tests
       env:
