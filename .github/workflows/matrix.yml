@@ -80,7 +80,7 @@ jobs:
     if: ${{ always() }}
     needs: [matrix-job]
     env:
-      NEEDS_CTX: ${{ fromJSON(needs) }}
+      NEEDS_CTX: ${{ fromJSON(needs.*.outputs) }}
 
     steps:
     - name: Evaluate
