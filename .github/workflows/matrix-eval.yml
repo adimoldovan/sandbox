@@ -46,14 +46,14 @@ jobs:
 
       - name: Create result file
         if: ${{ (failure() || cancelled()) && matrix.optional == false }}
-        run: echo "${{toJson(matrix)}}" > ./job.result
+        run: echo "${{toJson(matrix)}}" > ./job.json
 
       - name: Upload result file
         if: ${{ (failure() || cancelled()) && matrix.optional == false }}
         uses: actions/upload-artifact@v4
         with:
-          path: ./job.result
-          name: result-matrix-job-1-${{ strategy.job-index }}-${{job.status}}
+          path: ./job.json
+          name: result-matrix-job-1-${{ strategy.job-index }}-${{job.status}}.json
           if-no-files-found: warn
 
   evaluate-job:
@@ -65,13 +65,13 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          pattern: result-*
+          pattern: result-*.json
           merge-multiple: true
       - name: Evaluate
         run: |
           echo "needs context: ${{ toJson(needs) }}"
           
-          results="$(cat result-* | jq -c --slurp .)"
+          results="$(cat result-*.json | jq -c --slurp .)"
           echo $results
           
           echo $result
