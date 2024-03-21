@@ -63,8 +63,7 @@ jobs:
     steps:
     - name: Evaluate
       run: |
-        allneeds="${{ needs.* }}"
-        echo "$allneeds" | jq '.[]'
+        echo "needs context: ${{ toJson(needs) }}"
 
         result=${{needs.*.result}}
         echo $result
