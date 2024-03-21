@@ -48,10 +48,10 @@ jobs:
       if: ${{always()}}
       run: echo "${{matrix.optional}}" > matrix-job-1-${{ strategy.job-index }}-${{job.status}}
     - name: Upload result file
-        uses: actions/upload-artifact@v4
-        with:
-          name: Build log for job ${{ strategy.job-index }}
-          path: test-job-${{ strategy.job-index }}.txt
+      uses: actions/upload-artifact@v4
+      with:
+        name: Upload result file for matrix-job-1-${{ strategy.job-index }}
+        path: matrix-job-1-${{ strategy.job-index }}-${{job.status}}
 
   evaluate-job:
     name: "Evaluate"
