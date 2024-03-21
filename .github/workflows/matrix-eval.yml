@@ -52,8 +52,8 @@ jobs:
         if: ${{ (failure() || cancelled()) && matrix.optional == false }}
         uses: actions/upload-artifact@v4
         with:
-          path: matrix-job-1-${{ strategy.job-index }}-${{job.status}}.result
-          name: matrix-job-1-${{ strategy.job-index }}-${{job.status}}
+          path: matrix-job-1-${{ strategy.job-index }}-${{job.status}}
+          name: matrix-job-1-${{ strategy.job-index }}-${{job.status}}.result
           if-no-files-found: warn
 
   evaluate-job:
