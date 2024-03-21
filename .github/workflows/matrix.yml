@@ -27,6 +27,7 @@ jobs:
     outputs:
       evaluation: ${{ steps.evaluate.run.evaluation }}
     strategy:
+      fail-fast: false
       matrix:
         include: ${{fromJson( needs.create-matrix.outputs.matrix )}}
 
@@ -82,8 +83,8 @@ jobs:
     steps:
     - name: Evaluate
       run: |
-        evaluation="${{ needs.needs.* }}"
-        echo $evaluation
+        outputs="${{ needs.*.outputs }}"
+        echo $outputs
 
         result="${{ needs.*.result }}"
         echo $result
