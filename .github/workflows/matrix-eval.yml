@@ -40,6 +40,17 @@ jobs:
         echo "Name: ${{matrix}}"
         echo "matrix-job-1-${{strategy.job-index}}=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
 
+        # fail fail fail
+        if [ ${{ matrix.name }} == "job1.2" ]; then exit 1; fi
+
+    - name: Upload
+      id: upload
+      if: ${{always()}}
+      run: |
+        echo "${{job.status}}"
+        echo "${{matrix.optional}}"
+
+
   matrix-job-2:
     name: "Run 2 - ${{ matrix.name }}"
     runs-on: ubuntu-latest
@@ -55,7 +66,7 @@ jobs:
     - name: Run
       id: run
       run: |
-        echo "Name: ${{matrix}}"
+        echo "Name: ${{fromJson(matrix)}}"
         echo uqname="matrix-job-1-${{strategy.job-index}}"
         echo $uqname
         echo "${{strategy.job-index}}=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
