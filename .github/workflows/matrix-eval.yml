@@ -67,7 +67,8 @@ jobs:
         run: |
           echo "needs context: ${{ toJson(needs) }}"
           
-          results="$(cat */matrix | jq -c --slurp .)"
+          results="$(cat */results | jq -c --slurp .)"
+          echo $results
           
           echo $result
           if [[ $result != "success" && $result != "skipped" ]]; then
