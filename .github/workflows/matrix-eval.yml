@@ -82,8 +82,8 @@ jobs:
           echo "needs context: ${{ toJson(needs) }}"
           
           ls -lh
-          results="$(jq --slurp '.' result-*.json)"
-          echo $results
+          names="$(jq --slurp -c 'map(.name)' result-*.json)"
+          echo $names
           
           echo $result
           if [[ $result != "success" && $result != "skipped" ]]; then
