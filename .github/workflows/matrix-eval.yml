@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [create-matrix]
     outputs:
-      evaluation: ${{ steps.evaluate.run.evaluation }}
+      optional: ${{ steps.run.outputs.optional }}
     strategy:
       fail-fast: false
       matrix:
@@ -35,15 +35,17 @@ jobs:
 
     steps:
     - name: Run
+      id: run
       run: |
         echo "Name: ${{matrix}}"
+        echo "optional=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
 
   matrix-job-2:
     name: "Run 2 - ${{ matrix.name }}"
     runs-on: ubuntu-latest
     needs: [create-matrix]
     outputs:
-      evaluation: ${{ steps.evaluate.run.evaluation }}
+      optional: ${{ steps.run.outputs.optional }}
     strategy:
       fail-fast: false
       matrix:
@@ -51,8 +53,10 @@ jobs:
 
     steps:
     - name: Run
+      id: run
       run: |
         echo "Name: ${{matrix}}"
+        echo "optional=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
   
   evaluate-job:
     name: "Evaluate"
