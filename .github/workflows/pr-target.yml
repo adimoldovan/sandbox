@@ -19,3 +19,4 @@ jobs:
                 echo ${{github.event_name}}
                 echo $${{github.event.pull_request.head.ref}}
                 echo ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.ref }}
+                echo label-pr-${{ github.event_name }}-${{ github.event.action }}-${{ github.event.pull_request.head.ref }}
