@@ -24,6 +24,8 @@ jobs:
           JOBS2='[{name: "job2.1", optional: false}]'
           echo "jobs1=$JOBS1" >> "$GITHUB_OUTPUT"
           echo "jobs2=$JOBS2" >> "$GITHUB_OUTPUT"
+          
+          echo "jobs_status=a" >> "$GITHUB_ENV"
 
   matrix-job-1:
     name: "Run 1 - ${{ matrix.name }}"
@@ -52,12 +54,10 @@ jobs:
         if: ${{ always() }}
         run: |
           echo "$DAY_OF_WEEK"
-          $DAY_OF_WEEK="Tuesday"
-          echo "$DAY_OF_WEEK"
           
           echo "----"
           echo "$jobs_status"
-          echo "jobs_status=a" >> "$GITHUB_ENV"
+          echo "jobs_status=b" >> "$GITHUB_ENV"
           echo "$jobs_status"
 
       - name: Create result file
