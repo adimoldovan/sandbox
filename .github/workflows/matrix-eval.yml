@@ -63,9 +63,11 @@ jobs:
     steps:
     - name: Evaluate
       run: |
-        result="${{ needs.* }}"
+        allneeds="${{ needs.* }}"
+        echo "$allneeds" | jq '.[]'
+
+        result=${{needs.*.result}}
         echo $result
-        echo $NEEDS_CTX
         if [[ $result != "success" && $result != "skipped" ]]; then
           echo "One or more needed jobs have failed."
           exit 1
