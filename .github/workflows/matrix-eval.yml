@@ -28,6 +28,13 @@ jobs:
           echo "action_state=yellow" >> "$GITHUB_ENV"
           printf '%s\n' "$action_state"
 
+      - name: Create matrix
+        run: |
+          echo "action_state=yellow" >> "$GITHUB_ENV"
+      - name: Use the value
+        run: |
+          printf '%s\n' "$action_state" # This will output 'yellow'
+
   matrix-job-1:
     name: "Run 1 - ${{ matrix.name }}"
     runs-on: ubuntu-latest
