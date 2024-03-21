@@ -50,7 +50,7 @@ jobs:
         cat metadata.json
         
         # fail fail fail
-#        if [ ${{ matrix.id }} == 2 ]; then exit 1; fi
+        if [ ${{ matrix.id }} == 2 ]; then exit 1; fi
 
   conditional-job:
     name: "Report"
@@ -65,3 +65,13 @@ jobs:
       run: |
         echo ${{ needs.matrix-job.result }}
   
+  evaluate-job:
+    name: "Evaluate"
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs: [matrix-job]
+
+    steps:
+    - name: Notify
+      run: |
+        echo ${{ needs.matrix-job.result }}
