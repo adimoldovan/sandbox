@@ -74,7 +74,7 @@ jobs:
     steps:
     - name: Evaluate
       run: |
-        echo ${{ fromJSON(needs) }}
+        echo ${{ fromJSON(needs.*.result) }}
         result="${{ needs.*.result }}"
         echo $result
 
