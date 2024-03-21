@@ -50,8 +50,8 @@ jobs:
         if: ${{ always() }}
         run: |
           echo "$jobs_status"
-          updated_status="$jobs_status_${{job.status}}"
-          echo "jobs_status=updated_status" >> "$GITHUB_ENV"
+#          updated_status="$jobs_status_${{job.status}}"
+          echo "jobs_status=a" >> "$GITHUB_ENV"
           echo "$jobs_status"
 
       - name: Create result file
