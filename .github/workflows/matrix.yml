@@ -29,7 +29,7 @@ jobs:
         include: ${{fromJson( needs.create-matrix.outputs.matrix )}}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Set env value
       run: |
@@ -42,6 +42,8 @@ jobs:
       env:
         RUN_ID: ${{ matrix.id }}
       run: |
+        sleep ${{ matrix.id }}
+
         echo "$MATRIX_1"
         echo ${{ env.MATRIX_1 }}
         echo $RUN_ID >> metadata.json
@@ -57,7 +59,7 @@ jobs:
     needs: [matrix-job]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Notify
       run: |
