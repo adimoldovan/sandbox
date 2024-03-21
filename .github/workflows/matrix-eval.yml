@@ -46,7 +46,7 @@ jobs:
 
       - name: Create result file
         if: ${{ (failure() || cancelled()) && matrix.optional == false }}
-        run: echo "${{matrix}}" > ./results/matrix-job-1-${{ strategy.job-index }}-${{job.status}}
+        run: echo "${{matrix}}" > matrix-job-1-${{ strategy.job-index }}-${{job.status}}
 
       - name: Upload result file
         if: ${{ (failure() || cancelled()) && matrix.optional == false }}
