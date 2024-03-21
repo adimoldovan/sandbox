@@ -58,7 +58,7 @@ jobs:
         echo "Name: ${{matrix}}"
         echo uqname="matrix-job-1-${{strategy.job-index}}"
         echo $uqname
-        echo "$uqname=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
+        echo "${{strategy.job-index}}=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
   
   evaluate-job:
     name: "Evaluate"
