@@ -7,6 +7,9 @@ concurrency:
   group: matrix-${{ github.event_name }}-${{ github.ref }}-${{ github.event.action }}
   cancel-in-progress: true
 
+env:
+  DAY_OF_WEEK: Monday
+
 jobs:
   create-matrix:
     runs-on: ubuntu-latest
@@ -48,8 +51,12 @@ jobs:
       - name: Update status
         if: ${{ always() }}
         run: |
-          echo "$jobs_status"
+          echo "$DAY_OF_WEEK"
+          $DAY_OF_WEEK="Tuesday"
+          echo "$DAY_OF_WEEK"
           
+          echo "----"
+          echo "$jobs_status"
           echo "jobs_status=a" >> "$GITHUB_ENV"
           echo "$jobs_status"
 
