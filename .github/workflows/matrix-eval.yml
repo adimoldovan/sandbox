@@ -21,8 +21,6 @@ jobs:
           JOBS2='[{name: "job2.1", optional: false}]'
           echo "jobs1=$JOBS1" >> "$GITHUB_OUTPUT"
           echo "jobs2=$JOBS2" >> "$GITHUB_OUTPUT"
-    env:
-      STATUS: ""
 
   matrix-job-1:
     name: "Run 1 - ${{ matrix.name }}"
@@ -50,9 +48,10 @@ jobs:
       - name: Update status
         if: ${{ (failure() || cancelled()) && matrix.optional == false }}
         run: |
-          echo "$STATUS"
-          echo "${{job.status}}" >> "$STATUS"
-          echo "$STATUS"
+          echo "$jobs_status"
+          updated_status="$jobs_statusF"
+          echo "jobs_status=updated_status" >> "$GITHUB_ENV"
+          echo "$jobs_status"
 
       - name: Create result file
         if: ${{ (failure() || cancelled()) && matrix.optional == false }}
@@ -79,6 +78,7 @@ jobs:
           merge-multiple: true
       - name: Evaluate
         run: |
+          echo "$jobs_status"
           echo "needs context: ${{ toJson(needs) }}"
           
           ls -lh
