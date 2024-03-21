@@ -37,7 +37,7 @@ jobs:
       - name: Run
         id: run
         run: |
-          echo "Job: ${{ matrix }}"
+          echo "Job: ${{ toJson(matrix) }}"
           echo "matrix-job-1-${{strategy.job-index}}=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
           
           # fail fail fail
