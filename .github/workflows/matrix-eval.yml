@@ -1,4 +1,4 @@
-name: Test matrix
+name: Test matrix with evaluation
 
 on:
   push:
@@ -22,8 +22,8 @@ jobs:
           echo "jobs1=$JOBS1" >> "$GITHUB_OUTPUT"
           echo "jobs2=$JOBS2" >> "$GITHUB_OUTPUT"
 
-  matrix-job:
-    name: "Run ${{ matrix.name }}"
+  matrix-job-1:
+    name: "Run 1 - ${{ matrix.name }}"
     runs-on: ubuntu-latest
     needs: [create-matrix]
     outputs:
@@ -31,58 +31,34 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include: ${{fromJson( needs.create-matrix.outputs.matrix )}}
+        include: ${{fromJson( needs.create-matrix.outputs.jobs1 )}}
 
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Set env value
+    - name: Run
       run: |
-        echo "Name: ${{matrix.name}}"
-        echo "Id: ${{matrix.id}}"
-        if [ ${{ matrix.id }} == 1 ]; then echo "MATRIX_1=true" >> $GITHUB_ENV; fi
-#        if [[ ${{ matrix.name }} == *matrix ]]; then echo "matrix tests"; fi
+        echo "Name: ${{matrix}}"
 
-    - name: Run ${{ matrix.name }} tests
-      id: run
-      env:
-        RUN_ID: ${{ matrix.id }}
-      run: |
-        sleep ${{ matrix.id }}
-
-        echo ${{strategy.job-index}}
-
-        echo "$MATRIX_1"
-        echo ${{ env.MATRIX_1 }}
-        echo $RUN_ID >> metadata.json
-        cat metadata.json
-        
-        # fail fail fail
-        if [ ${{ matrix.id }} == 2 ]; then exit 1; fi
-
-        # Write output
-        echo "evaluation={\"key\":\"value\"}" >> "$GITHUB_OUTPUT"
-
-  conditional-job:
-    name: "Report"
+  matrix-job-2:
+    name: "Run 2 - ${{ matrix.name }}"
     runs-on: ubuntu-latest
-    if: ${{ success() || failure() }}
-    needs: [matrix-job]
+    needs: [create-matrix]
+    outputs:
+      evaluation: ${{ steps.evaluate.run.evaluation }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{fromJson( needs.create-matrix.outputs.jobs2 )}}
 
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Notify
+    - name: Run
       run: |
-        echo ${{ needs.matrix-job.result }}
+        echo "Name: ${{matrix}}"
   
   evaluate-job:
     name: "Evaluate"
     runs-on: ubuntu-latest
     if: ${{ always() }}
-    needs: [matrix-job]
-    env:
-      NEEDS_CTX: ${{ fromJSON(needs.matrix-job.outputs) }}
+    needs: [matrix-job-1, matrix-job-2]
 
     steps:
     - name: Evaluate
