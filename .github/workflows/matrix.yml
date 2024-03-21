@@ -79,10 +79,14 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ always() }}
     needs: [matrix-job]
+    env:
+      NEEDS_CTX: ${{ fromJSON(needs.*) }}
 
     steps:
     - name: Evaluate
       run: |
+        echo "$NEEDS_CTX"
+
         outputs="${{ needs.*.outputs }}"
         echo $outputs
 
