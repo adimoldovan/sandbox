@@ -57,7 +57,7 @@ jobs:
     name: "Evaluate"
     runs-on: ubuntu-latest
     if: ${{ always() }}
-    needs: [matrix-job-1, matrix-job-2]
+    needs: [matrix-job-1]
 
     steps:
     - name: Evaluate
