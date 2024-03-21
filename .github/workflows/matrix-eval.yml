@@ -68,7 +68,7 @@ jobs:
         run: |
           echo "needs context: ${{ toJson(needs) }}"
           
-          results="$(cat *.results | jq -c --slurp .)"
+          results="$(cat *.result | jq -c --slurp .)"
           echo $results
           
           echo $result
