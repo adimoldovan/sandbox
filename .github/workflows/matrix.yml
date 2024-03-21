@@ -80,8 +80,10 @@ jobs:
     steps:
     - name: Evaluate
       run: |
-        echo ${{ fromJSON( needs.matrix-job.outputs.evaluation ) }}
-        echo ${{ fromJSON(needs.matrix-job.result) }}
+        evaluation="${{ fromJSON( needs.matrix-job.outputs.evaluation ) }}"
+        echo $evaluation
+        allneeds="${{ fromJSON(needs.matrix-job.result) }}"
+        echo $allneeds
         result="${{ needs.*.result }}"
         echo $result
 
