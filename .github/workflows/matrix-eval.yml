@@ -26,7 +26,7 @@ jobs:
           echo "jobs2=$JOBS2" >> "$GITHUB_OUTPUT"
           
           echo "action_state=yellow" >> "$GITHUB_ENV"
-          echo "$action_state"
+          printf '%s\n' "$action_state"
 
   matrix-job-1:
     name: "Run 1 - ${{ matrix.name }}"
@@ -43,7 +43,7 @@ jobs:
       - name: Run
         id: run
         run: |
-          echo "$action_state"
+          printf '%s\n' "$action_state"
           
           echo "Job: ${{ toJson(matrix) }}"
           echo "matrix-job-1-${{strategy.job-index}}=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
@@ -57,7 +57,7 @@ jobs:
         if: ${{ always() }}
         run: |
           echo "$DAY_OF_WEEK"
-          echo "$action_state"
+          printf '%s\n' "$action_state"
           
           echo "----"
           echo "$jobs_status"
