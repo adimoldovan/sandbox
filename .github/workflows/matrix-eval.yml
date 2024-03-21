@@ -45,10 +45,11 @@ jobs:
           if [ ${{ matrix.name }} == "job1.3" ]; then exit 1; fi
 
       - name: Create result file
-        if: ${{always()}}
+        if: ${{ failure() || cancelled() }}
         run: echo "${{matrix.optional}}" > matrix-job-1-${{ strategy.job-index }}-${{job.status}}
-        
+
       - name: Upload result file
+        if: ${{ failure() || cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: Upload result file for matrix-job-1-${{ strategy.job-index }}
