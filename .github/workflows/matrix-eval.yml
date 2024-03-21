@@ -37,7 +37,7 @@ jobs:
       - name: Run
         id: run
         run: |
-          echo "Job: ${{ fromJson(matrix) }}"
+          echo "Job: ${{ matrix }}"
           echo "matrix-job-1-${{strategy.job-index}}=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
           
           # fail fail fail
@@ -46,7 +46,7 @@ jobs:
 
       - name: Create result file
         if: ${{ failure() || cancelled() }}
-        run: echo "${{fromJson(matrix)}}" > matrix-job-1-${{ strategy.job-index }}-${{job.status}}
+        run: echo "${{matrix}}" > matrix-job-1-${{ strategy.job-index }}-${{job.status}}
 
       - name: Upload result file
         if: ${{ failure() || cancelled() }}
