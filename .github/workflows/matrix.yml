@@ -65,7 +65,7 @@ jobs:
   conditional-job:
     name: "Report"
     runs-on: ubuntu-latest
-    if: ${{ github.event_name != "pull_request" }}
+    if: ${{ github.event_name != pull_request }}
     needs: [ matrix-job ]
 
     steps:
