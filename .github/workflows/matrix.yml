@@ -65,7 +65,7 @@ jobs:
   conditional-job:
     name: "Report"
     runs-on: ubuntu-latest
-    if: github.event_name == push
+    if: github.event_name == 'push'
     needs: [ matrix-job ]
 
     steps:
