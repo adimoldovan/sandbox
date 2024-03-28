@@ -73,13 +73,9 @@ jobs:
 
       - name: Notify
         run: |
-          echo ${{ needs.matrix-job.result }}
+          echo ${{ needs.*.result }}
           echo ${{ github.event_name }}
-          
-          if [[ ${{ github.event_name }} != "pull_request" ]]; then
-              echo "This is not a pull request event."
-          fi
-  
+
   evaluate-job:
     name: "Evaluate"
     runs-on: ubuntu-latest
