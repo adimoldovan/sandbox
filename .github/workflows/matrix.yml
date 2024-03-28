@@ -65,7 +65,7 @@ jobs:
   conditional-job:
     name: "Report"
     runs-on: ubuntu-latest
-    if: ${{ github.event_name != 'pull_request' }}
+    if: ${{ github.event_name != "pull_request" }}
     needs: [ matrix-job ]
 
     steps:
@@ -80,8 +80,6 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ always() }}
     needs: [ matrix-job ]
-    env:
-      NEEDS_CTX: ${{ fromJSON(needs.matrix-job.outputs) }}
 
     steps:
       - name: Evaluate
