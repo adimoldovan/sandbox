@@ -65,7 +65,7 @@ jobs:
   conditional-job:
     name: "Report"
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    if: ${{ ! cancelled() }}
     needs: [ matrix-job ]
 
     steps:
@@ -74,6 +74,11 @@ jobs:
       - name: Notify
         run: |
           echo ${{ needs.matrix-job.result }}
+          echo ${{ github.event_name }}
+          
+          if [[ ${{ github.event_name }} != "pull_request" ]]; then
+              echo "This is not a pull request event."
+          fi
   
   evaluate-job:
     name: "Evaluate"
