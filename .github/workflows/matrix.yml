@@ -67,6 +67,8 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'pull_request' && ! cancelled() }}
     needs: [ matrix-job ]
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
 
     steps:
       - uses: actions/checkout@v4
@@ -75,6 +77,7 @@ jobs:
         run: |
           echo ${{ needs.*.result }}
           echo ${{ github.event_name }}
+          echo "$PR_NUMBER"
 
   evaluate-job:
     name: "Evaluate"
