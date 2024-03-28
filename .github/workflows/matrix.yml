@@ -20,6 +20,7 @@ jobs:
           echo "$MATRIX"
           echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
 #          echo "matrix='[]'" >> "$GITHUB_OUTPUT"
+          echo ${{ github.event_name }}
   matrix-job:
     name: "Run ${{ matrix.name }}"
     runs-on: ubuntu-latest
