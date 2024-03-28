@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.evaluate.outputs.matrix }}
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Create matrix
         id: evaluate
@@ -21,6 +23,10 @@ jobs:
           echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
           #          echo "matrix='[]'" >> "$GITHUB_OUTPUT"
           echo ${{ github.event_name }}
+          
+          gh workflow run matrix-eval.yml
+          
+
   matrix-job:
     name: "Run ${{ matrix.name }}"
     runs-on: ubuntu-latest
