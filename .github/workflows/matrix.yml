@@ -28,7 +28,7 @@ jobs:
           
 
   matrix-job:
-    name: "Run ${{ env.MATRIX_NAME }}"
+    name: 'Run ${{ env.MATRIX_NAME }}'
     runs-on: ubuntu-latest
     needs: [ create-matrix ]
     outputs:
