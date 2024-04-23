@@ -37,7 +37,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include: ${{ fromJson( needs.create-matrix.outputs.matrix ) || 'skipped' }}
+        include: ${{ fromJson( needs.create-matrix.outputs.matrix ) || '{name:"skipped"}' }}
 
     steps:
       - uses: actions/checkout@v4
