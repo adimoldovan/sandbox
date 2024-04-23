@@ -36,7 +36,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include: ${{ fromJson( needs.create-matrix.outputs.matrix ) || 'default' }}
+        include: ${{ fromJson( needs.create-matrix.outputs.matrix ) }}
 
     steps:
       - uses: actions/checkout@v4
