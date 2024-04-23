@@ -18,14 +18,13 @@ jobs:
       - name: Create matrix
         id: evaluate
         run: |
-          MATRIX='[]'
-#          MATRIX='[{name: "matrix 1", id: "1"},{name: "matrix 2", id: "2"},{name: "matrix 3", id: "3"}]'
+          MATRIX='[{name: "matrix 1", id: "1"},{name: "matrix 2", id: "2"},{name: "matrix 3", id: "3"}]'
           echo "$MATRIX"
           echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
-          #          echo "matrix='[]'" >> "$GITHUB_OUTPUT"
+          echo "matrix='[]'" >> "$GITHUB_OUTPUT"
           echo ${{ github.event_name }}
           
-#          gh workflow run matrix-eval.yml
+          # gh workflow run matrix-eval.yml
           
 
   matrix-job:
