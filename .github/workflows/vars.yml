@@ -55,6 +55,6 @@ jobs:
       run: |
         echo "$GITHUB_CONTEXT"
         echo "PR number: ${{ github.event.pull_request.number }}"
-        wcho "Commit message: ${{ github.event.head_commit.message }}"
+        wcho "github.event.head_commit.message: ${{ github.event.head_commit.message }}"
         echo "Ref: ${{ github.ref }}"
 
