@@ -81,7 +81,7 @@ jobs:
           REPO: ${{ github.repository }}
           RUN_ID: ${{ github.run_id }}
         run: |
-          lintJobs=${{ fromJSON( needs.create-matrix.outputs.jobs1 ) }}
+          lintJobs=${{ needs.create-matrix.outputs.jobs1 }}
           jobs=$(curl -X GET https://api.github.com/repos/$REPO/actions/runs/$RUN_ID/jobs | jq ".jobs[] | {job_status: .conclusion, name: .name}")
           echo $jobs
       
