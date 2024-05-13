@@ -10,7 +10,7 @@ on:
     branches:
       - main 
 concurrency:
-  group: gardening-${{ github.event_name }}-${{ github.event.action }}-${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.ref || github.run_id }}
+  group: context-${{ github.event_name }}-${{ github.event.action }}-${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.ref || github.run_id }}
   cancel-in-progress: true
 
 jobs:
@@ -19,6 +19,8 @@ jobs:
     env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
     steps:
+      - name: Group
+        run: echo "context-${{ github.event_name == 'pull_request_target' && github.head_ref || github.run_id }}"
       - name: issues
         if: ${{ github.event_name == 'issues'}}
         run: |
