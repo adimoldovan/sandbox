@@ -65,11 +65,11 @@ jobs:
           name: result-matrix-job-1-${{ strategy.job-index }}-${{job.status}}
           if-no-files-found: warn
 
-  evaluate-job:
-    name: "Evaluate"
+  evaluate-with-api:
+    name: "Evaluate with API"
     runs-on: ubuntu-latest
     if: ${{ always() }}
-    needs: [ matrix-job-1 ]
+    needs: [ create-matrix, matrix-job-1 ]
 
     steps:
       - uses: actions/download-artifact@v4
@@ -81,9 +81,24 @@ jobs:
           REPO: ${{ github.repository }}
           RUN_ID: ${{ github.run_id }}
         run: |
+          lintJobs=${{ fromJSON( needs.create-matrix.outputs.jobs1 ) }}
           jobs=$(curl -X GET https://api.github.com/repos/$REPO/actions/runs/$RUN_ID/jobs | jq ".jobs[] | {job_status: .conclusion, name: .name}")
           echo $jobs
-        
+      
+
+  evaluate-with-artifacts:
+    name: "Evaluate with artifacts"
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs: [ matrix-job-1 ]
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: result-*
+          merge-multiple: true
+      - name: Evaluate
+        run: |
           echo "$jobs_status"
           echo "needs context: ${{ toJson(needs) }}"
           
