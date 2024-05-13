@@ -77,6 +77,8 @@ jobs:
           REPO: ${{ github.repository }}
           RUN_ID: ${{ github.run_id }}
         run: |
+          echo "result: ${{needs.*.result}}"
+        
           jobs1="${{ needs.create-matrix.outputs.jobs1 }}"
           echo $jobs1
           jobs2="${{ needs.create-matrix.outputs.jobs2 }}"
