@@ -19,8 +19,15 @@ jobs:
     env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
     steps:
-      - name: Issues
+      - name: issues
         if: ${{ github.event_name == 'issues'}}
+        run: |
+          echo "event name: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "head_ref: ${{ github.head_ref }}"
+          echo "$GITHUB_CONTEXT"
+      - name: pull_request_target
+        if: ${{ github.event_name == 'pull_request_target'}}
         run: |
           echo "event name: ${{ github.event_name }}"
           echo "Ref: ${{ github.ref }}"
