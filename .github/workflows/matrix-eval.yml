@@ -83,8 +83,8 @@ jobs:
           echo $jobs2
           jobs=$(curl -X GET https://api.github.com/repos/$REPO/actions/runs/$RUN_ID/jobs | jq ".jobs[] | {job_status: .conclusion, name: .name}")
           echo $jobs
-          alljobs="${{ toJson(needs.create-matrix.outputs.*) }}"
-          echo $alljobs
+          alljobs=${{ toJson(needs.create-matrix.outputs.*) }}
+          echo "All jobs: $alljobs"
       
 
   evaluate-with-artifacts:
