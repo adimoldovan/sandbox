@@ -20,8 +20,8 @@ jobs:
       - name: Create matrix
         id: evaluate
         run: |
-          JOBS1='[{"name": "job1.1", "optional": true},{"name": "job1.2", "optional": true},{"name": "job1.3", "optional": false},{"name": "job1.4", "optional": false},{"name": "job1.5", "optional": false}]'
-          JOBS2='[{"name": "job2.1", "optional": false}]'
+          JOBS1='[{"name": "job1.1", "optional": true},{"name": "job1.2", "optional": false}]'
+          JOBS2='[{"name": "job2.1", "optional": false},{"name": "job2.2", "optional": true}]'
           echo "jobs1=$JOBS1" >> "$GITHUB_OUTPUT"
           echo "jobs2=$JOBS2" >> "$GITHUB_OUTPUT"
 
@@ -44,9 +44,8 @@ jobs:
           echo "matrix-job-1-${{strategy.job-index}}=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
           
           # fail fail fail
-          if [ ${{ matrix.name }} == "job1.1" ]; then exit 1; fi
-          if [ ${{ matrix.name }} == "job1.3" ]; then exit 1; fi
-          if [ ${{ matrix.name }} == "job1.5" ]; then exit 1; fi
+          # if [ ${{ matrix.name }} == "job1.1" ]; then exit 1; fi
+          # if [ ${{ matrix.name }} == "job1.2" ]; then exit 1; fi
 
       - name: Update status
         if: ${{ always() }}
@@ -65,11 +64,50 @@ jobs:
           name: result-matrix-job-1-${{ strategy.job-index }}-${{job.status}}
           if-no-files-found: warn
 
+  matrix-job-2:
+      name: "Run 2 - ${{ matrix.name }}"
+      runs-on: ubuntu-latest
+      needs: [ create-matrix ]
+      outputs:
+        optional: ${{ steps.run.outputs.optional }}
+      strategy:
+        fail-fast: false
+        matrix:
+          include: ${{fromJson( needs.create-matrix.outputs.jobs2 )}}
+        
+      steps:
+        - name: Run
+          id: run
+          run: |
+              echo "Job: ${{ toJson(matrix) }}"
+              echo "matrix-job-2-${{strategy.job-index}}=${{matrix.optional}}" >> "$GITHUB_OUTPUT"
+              
+              # fail fail fail
+              # if [ ${{ matrix.name }} == "job2.1" ]; then exit 1; fi
+              # if [ ${{ matrix.name }} == "job2.2" ]; then exit 1; fi
+        
+        - name: Update status
+          if: ${{ always() }}
+          run: |
+            echo "${{job.status}}" >> $GITHUB_STEP_SUMMARY
+    
+        - name: Create result file
+          if: ${{ (failure() || cancelled()) && matrix.optional == false }}
+          run: echo "${{toJson(matrix)}}" > result-matrix-job-2-${{ strategy.job-index }}-${{job.status}}.json
+    
+        - name: Upload result file
+          if: ${{ (failure() || cancelled()) && matrix.optional == false }}
+          uses: actions/upload-artifact@v4
+          with:
+            path: result-*.json
+            name: result-matrix-job-2-${{ strategy.job-index }}-${{job.status}}
+            if-no-files-found: warn
+
   evaluate-with-api:
     name: "Evaluate with API"
     runs-on: ubuntu-latest
     if: ${{ always() }}
-    needs: [ create-matrix, matrix-job-1 ]
+    needs: [ create-matrix, matrix-job-1, matrix-job-2 ]
 
     steps:
       - name: Evaluate
