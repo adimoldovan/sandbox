@@ -123,8 +123,8 @@ jobs:
           echo $jobs1
           jobs2="${{ needs.create-matrix.outputs.jobs2 }}"
           echo $jobs2
-          jobs=$(curl -X GET https://api.github.com/repos/$REPO/actions/runs/$RUN_ID/jobs | jq ".jobs[] | {job_status: .conclusion, name: .name}")
-          # jobs=$(curl -X GET https://api.github.com/repos/$REPO/actions/runs/$RUN_ID/jobs | jq ".jobs[]")
+          jobs=$(curl -X GET https://api.github.com/repos/$REPO/actions/runs/$RUN_ID/jobs | jq "[.jobs[] -r | {job_status: .conclusion, name: .name}]")
+          # jobs=$(curl -X GET https://api.github.com/repos/$REPO/actions/runs/$RUN_ID/jobs | jq "[.jobs[]]")
           echo $jobs
           echo "optional jobs:"
           echo "$jobs" | jq -r '.[] | select(.name | endswith("(optional)"))'
