@@ -126,10 +126,10 @@ jobs:
           jobs=$(curl -X GET https://api.github.com/repos/$REPO/actions/runs/$RUN_ID/jobs | jq "[.jobs[] | {job_status: .conclusion, name: .name}]")
           # jobs=$(curl -X GET https://api.github.com/repos/$REPO/actions/runs/$RUN_ID/jobs | jq "[.jobs[]]")
           echo $jobs
-          echo "required jobs:"
-          echo "$jobs" | jq -r '.[] | select(.name | !endswith("(optional)"))'
-          echo "non-successful required jobs:"
-          echo "$jobs" | jq -r '.[] | select(.name | !endswith("(optional)")) | select(.status != "success")'
+          requiredJobs=$("$jobs" | jq -r '.[] | select(.name | endswith("(optional)") | not)')
+          echo "requiredJobs: $requiredJobs"
+          nonSuccessfullRequiredJobs=$("$requiredJobs" | jq -r '.[] | select(.status != "success")')
+          echo "nonSuccessfullRequiredJobs: $nonSuccessfullRequiredJobs"
       
 
   evaluate-with-artifacts:
