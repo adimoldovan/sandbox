@@ -129,7 +129,7 @@ jobs:
           requiredJobs=$("$jobs" | jq -r '.[] | select(.name | endswith("(optional)") | not)')
           echo "requiredJobs: $requiredJobs"
           nonSuccessfullRequiredJobs=$("$requiredJobs" | jq -r '.[] | select(.status != "success")')
-          echo "nonSuccessfullRequiredJobs: $nonSuccessfullRequiredJobs"
+          echo "non successful required jobs: $nonSuccessfullRequiredJobs"
       
 
   evaluate-with-artifacts:
