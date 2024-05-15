@@ -118,7 +118,8 @@ jobs:
           echo "needs: ${{toJson(needs)}}"
           echo "results: ${{join(needs.*.result, ', ')}}"
           echo "failed: ${{contains(needs.*.result, 'failure')}}"
-        
+          echo "matrix: ${{ toJson(needs.create-matrix.outputs.*)}}"
+
           jobs1="${{ needs.create-matrix.outputs.jobs1 }}"
           echo $jobs1
           jobs2="${{ needs.create-matrix.outputs.jobs2 }}"
@@ -128,8 +129,6 @@ jobs:
           echo $jobs
           requiredJobs=$("$jobs" | jq -r '.[] | select(.name | endswith("(optional)") | not)')
           echo "requiredJobs: $requiredJobs"
-          nonSuccessfullRequiredJobs=$("$requiredJobs" | jq -r '.[] | select(.status != "success")')
-          echo "non successful required jobs: $nonSuccessfullRequiredJobs"
       
 
   evaluate-with-artifacts:
