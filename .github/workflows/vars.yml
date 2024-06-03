@@ -47,7 +47,7 @@ jobs:
         echo "$DIFF"
 
     - name: Only for tags
-      if: ${{ GITHUB_REF_TYPE == 'tag' }}
+      if: ${{ github.ref_type == 'tag' }}
       run: |
         echo "GITHUB_REF $GITHUB_REF"
         echo "GITHUB_REF_TYPE $GITHUB_REF_TYPE"
