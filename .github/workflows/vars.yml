@@ -54,10 +54,11 @@ jobs:
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
+        HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
       run: |
         echo "PR number: ${{ github.event.pull_request.number }}"
         echo "github.event.head_commit.message: ${{ github.event.head_commit.message }}"
-        COMMIT_MESSAGE=`echo "${{ github.event.head_commit.message }}" | head -1`
+        COMMIT_MESSAGE=`echo "$HEAD_COMMIT_MESSAGE" | head -1`
         echo "COMMIT_MESSAGE: $COMMIT_MESSAGE"
         echo "COMMIT_MESSAGE=$COMMIT_MESSAGE" >> "$GITHUB_OUTPUT"
         echo "Ref: ${{ github.ref }}"
