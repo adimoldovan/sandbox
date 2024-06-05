@@ -6,6 +6,7 @@ on:
       - 'main'
     tags:
       - '*'
+  release:
   
   schedule:
     - cron: '0 0 10 * *'
