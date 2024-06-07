@@ -116,6 +116,8 @@ jobs:
             FLAKY_REPORTS=true;
           fi
 
+          echo "HAS_FLAKY_TESTS=$HAS_FLAKY_TESTS" >> $GITHUB_ENV
+
       - name: 'Setup'
         if: ${{ env.FLAKY_REPORTS }}
         uses: ./.github/setup-node
