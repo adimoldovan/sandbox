@@ -101,7 +101,7 @@ jobs:
 
       - name: 'Check if there are flaky tests reports'
         run: |
-          downloadPath=${{ steps.download-artifact.outputs.download-path }}
+          downloadPath='${{ steps.download-artifact.outputs.download-path }}'
           FLAKY_REPORTS=$(ls -A $downloadPath)
 
       - name: 'Setup'
