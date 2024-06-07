@@ -109,7 +109,8 @@ jobs:
           path: flaky-tests
           merge-multiple: true
 
-      - name: 'Check if there are flaky tests reports'
+      - uses: actions/github-script@v7
+        name: 'Check if there are flaky tests reports'
         id: check-flaky-reports
         with: 
           script: |
