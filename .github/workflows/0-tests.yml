@@ -94,7 +94,7 @@ jobs:
           sparse-checkout: |
             ./packages/report-flaky-tests
             package.json
-            .bin
+            bin
             .github
 
       - name: 'Setup'
