@@ -91,9 +91,16 @@ jobs:
         with:
           repository: WordPress/gutenberg
           ref: dbf201449e9736f672b61e422787d47659db327a
+          sparse-checkout: |
+            ./packages/report-flaky-tests
+            package.json
+            .bin
 
       - name: 'Setup'
         uses: ./.github/setup-node
+
+      - name: 'Build'
+        uses: npm run build:packages
 
       - name: 'Report flaky tests'
         uses: ./packages/report-flaky-tests
