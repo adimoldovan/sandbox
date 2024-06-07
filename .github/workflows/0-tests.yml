@@ -115,6 +115,7 @@ jobs:
           downloadPath='${{ steps.download-artifact.outputs.download-path }}'
           # make dir so that next step doesn't fail if it doesn't exist 
           mkdir -p $downloadPath
+          ls -A -m $downloadPath
           echo "FLAKY_REPORTS=$(ls -A -m $downloadPath)" >> $GITHUB_ENV
 
       - name: 'Setup'
