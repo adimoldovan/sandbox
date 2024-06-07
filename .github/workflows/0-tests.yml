@@ -100,7 +100,7 @@ jobs:
         uses: ./.github/setup-node
 
       - name: 'Build'
-        uses: npm run build:packages
+        run: npm run build:packages
 
       - name: 'Report flaky tests'
         uses: ./packages/report-flaky-tests
