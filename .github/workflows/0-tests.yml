@@ -93,8 +93,8 @@ jobs:
           ref: dbf201449e9736f672b61e422787d47659db327a
 
       - run: |
-          mkdir -flaky-tests
-          touch -flaky-tests/test-one.json
+          mkdir xflaky-tests
+          touch xflaky-tests/test-one.json
 
       - uses: actions/upload-artifact@v4
         with:
