@@ -93,7 +93,7 @@ jobs:
           ref: dbf201449e9736f672b61e422787d47659db327a
 
       - run: |
-          # mkdir flaky-tests
+          mkdir flaky-tests
           # touch flaky-tests/test-one.json
           # touch flaky-tests/test-two.json
 
