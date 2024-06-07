@@ -94,7 +94,7 @@ jobs:
 
       - run: |
           mkdir flaky-tests
-          # touch flaky-tests/test-one.json
+          touch flaky-tests/test-one.json
           # touch flaky-tests/test-two.json
 
       - uses: actions/upload-artifact@v4
