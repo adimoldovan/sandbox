@@ -102,7 +102,10 @@ jobs:
       - name: 'Check if there are flaky tests reports'
         run: |
           downloadPath='${{ steps.download-artifact.outputs.download-path }}'
-          FLAKY_REPORTS=$(ls -A $downloadPath)
+          FLAKY_REPORTS=false
+          if [ -d "downloadPath" ] && [ "$(ls -A downloadPath)" ]; then 
+            FLAKY_REPORTS=true;
+          fi
 
       - name: 'Setup'
         if: ${{ !!env.FLAKY_REPORTS }}
