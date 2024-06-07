@@ -94,8 +94,9 @@ jobs:
 
       - run: |
           mkdir flaky-tests
-          touch flaky-tests/test-one.json
-          # touch flaky-tests/test-two.json
+          touch flaky-tests/the-flaky-test-report-of-test-one.json
+          touch flaky-tests/the-flaky-test-report-of-test-two.json
+          touch flaky-tests/the-flaky-test-report-of-test-three.json
 
       - uses: actions/upload-artifact@v4
         with:
@@ -109,29 +110,23 @@ jobs:
           path: flaky-tests
           merge-multiple: true
 
-      - uses: actions/github-script@v7
-        name: 'Check if there are flaky tests reports'
-        id: check-flaky-reports
-        with: 
-          script: |
-            const fs = require('fs');
-            const downloadPath = ${{ toJson(steps.download-artifact.outputs.download-path) }}
-            if (fs.existsSync(downloadPath) && fs.readdirSync(downloadPath).length > 0) {
-              core.setOutput( 'has-flaky-test-report', true );
-            } else {
-              core.setOutput( 'has-flaky-test-report', false );
-            }
+      - name: 'Check if there are flaky tests reports'
+        run: |
+          downloadPath='${{ steps.download-artifact.outputs.download-path }}'
+          # make dir so that next step doesn't fail if it doesn't exist 
+          mkdir -p $downloadPath
+          echo "FLAKY_REPORTS=$(ls -A -m $downloadPath)" >> $GITHUB_ENV
 
       - name: 'Setup'
-        if: ${{ steps.check-flaky-reports.outputs.has-flaky-test-report == true }}
+        if: ${{ !!env.FLAKY_REPORTS }}
         uses: ./.github/setup-node
 
       - name: 'Build'
-        if: ${{ steps.check-flaky-reports.outputs.has-flaky-test-report == true }}
+        if: ${{ !!env.FLAKY_REPORTS }}
         run: npm run build:packages
 
       - name: 'Report flaky tests'
-        if: ${{ steps.check-flaky-reports.outputs.has-flaky-test-report == true }}
+        if: ${{ !!env.FLAKY_REPORTS }}
         uses: ./packages/report-flaky-tests
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
