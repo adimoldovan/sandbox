@@ -95,6 +95,7 @@ jobs:
             ./packages/report-flaky-tests
             package.json
             .bin
+            .github
 
       - name: 'Setup'
         uses: ./.github/setup-node
