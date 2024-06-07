@@ -110,21 +110,26 @@ jobs:
           merge-multiple: true
 
       - name: 'Check if there are flaky tests reports'
-        run: |
-          downloadPath='${{ steps.download-artifact.outputs.download-path }}'
-          mkdir -p $downloadPath
-          echo "FLAKY_REPORTS=\"$(ls -A -m $downloadPath)\"" >> $GITHUB_ENV
+        id: check-flaky-reports
+        with: 
+          script: |
+            const downloadPath = ${{ steps.download-artifact.outputs.download-path }}
+            if (fs.existsSync(directoryPath) && fs.readdirSync(directoryPath).length > 0) {
+              core.setOutput( 'has-flaky-test-report', true );
+            } else {
+              core.setOutput( 'has-flaky-test-report', false );
+            }
 
       - name: 'Setup'
-        if: ${{ !!env.FLAKY_REPORTS }}
+        if: ${{ steps.check-flaky-reports.outputs.flaky-tests }}
         uses: ./.github/setup-node
 
       - name: 'Build'
-        if: ${{ !!env.FLAKY_REPORTS }}
+        if: ${{ steps.check-flaky-reports.outputs.flaky-tests }}
         run: npm run build:packages
 
       - name: 'Report flaky tests'
-        if: ${{ !!env.FLAKY_REPORTS }}
+        if: ${{ steps.check-flaky-reports.outputs.flaky-tests }}
         uses: ./packages/report-flaky-tests
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
