@@ -113,7 +113,7 @@ jobs:
         run: |
           downloadPath='${{ steps.download-artifact.outputs.download-path }}'
           mkdir -p $downloadPath
-          echo "FLAKY_REPORTS=$(ls -A $downloadPath)" >> $GITHUB_ENV
+          echo "FLAKY_REPORTS=\"$(ls -A $downloadPath)\"" >> $GITHUB_ENV
 
       - name: 'Setup'
         if: ${{ !!env.FLAKY_REPORTS }}
