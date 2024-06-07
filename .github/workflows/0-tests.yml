@@ -123,15 +123,15 @@ jobs:
             }
 
       - name: 'Setup'
-        if: ${{ steps.check-flaky-reports.outputs.has-flaky-test-report }}
+        if: ${{ steps.check-flaky-reports.outputs.has-flaky-test-report == true }}
         uses: ./.github/setup-node
 
       - name: 'Build'
-        if: ${{ steps.check-flaky-reports.outputs.has-flaky-test-report }}
+        if: ${{ steps.check-flaky-reports.outputs.has-flaky-test-report == true }}
         run: npm run build:packages
 
       - name: 'Report flaky tests'
-        if: ${{ steps.check-flaky-reports.outputs.has-flaky-test-report }}
+        if: ${{ steps.check-flaky-reports.outputs.has-flaky-test-report == true }}
         uses: ./packages/report-flaky-tests
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
