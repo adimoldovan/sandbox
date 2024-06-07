@@ -91,20 +91,29 @@ jobs:
         with:
           repository: WordPress/gutenberg
           ref: dbf201449e9736f672b61e422787d47659db327a
-          sparse-checkout: |
-            ./packages/report-flaky-tests
-            package.json
-            bin
-            patches
-            .github
+
+      - uses: actions/download-artifact@v4
+        id: download-artifact
+        with:
+          pattern: flaky-tests*
+          path: flaky-tests
+          merge-multiple: true
+
+      - name: 'Check if there are flaky tests reports'
+        run: |
+          downloadPath=${{ steps.download-artifact.outputs.download-path }}
+          FLAKY_REPORTS=$(ls -A $downloadPath)
 
       - name: 'Setup'
+        if: ${{ !!env.FLAKY_REPORTS }}
         uses: ./.github/setup-node
 
       - name: 'Build'
+        if: ${{ !!env.FLAKY_REPORTS }}
         run: npm run build:packages
 
       - name: 'Report flaky tests'
+        if: ${{ !!env.FLAKY_REPORTS }}
         uses: ./packages/report-flaky-tests
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
