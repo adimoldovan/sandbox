@@ -82,3 +82,22 @@ jobs:
         working-directory: ./build-output/build
         run: ls -lh -R
 
+  report-flaky:
+    name: "Report flaky tests"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: WordPress/gutenberg
+          ref: dbf201449e9736f672b61e422787d47659db327a
+
+      - name: 'Setup'
+        uses: ./.github/setup-node
+
+      - name: 'Report flaky tests'
+        uses: ./packages/report-flaky-tests
+        with:
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
+          label: 'flaky test'
+
