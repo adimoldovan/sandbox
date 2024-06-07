@@ -114,8 +114,9 @@ jobs:
         id: check-flaky-reports
         with: 
           script: |
+            const fs = require('fs');
             const downloadPath = ${{ toJson(steps.download-artifact.outputs.download-path) }}
-            if (fs.existsSync(directoryPath) && fs.readdirSync(directoryPath).length > 0) {
+            if (fs.existsSync(downloadPath) && fs.readdirSync(downloadPath).length > 0) {
               core.setOutput( 'has-flaky-test-report', true );
             } else {
               core.setOutput( 'has-flaky-test-report', false );
