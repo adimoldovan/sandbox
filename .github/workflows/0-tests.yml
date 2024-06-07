@@ -116,7 +116,7 @@ jobs:
           # make dir so that next step doesn't fail if it doesn't exist 
           mkdir -p $downloadPath
           ls -A -m $downloadPath
-          echo "FLAKY_REPORTS=$(ls -A -m $downloadPath)" >> $GITHUB_ENV
+          echo "FLAKY_REPORTS=$(ls -A $downloadPath | head -1)" >> $GITHUB_ENV
 
       - name: 'Setup'
         if: ${{ !!env.FLAKY_REPORTS }}
