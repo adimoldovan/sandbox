@@ -160,8 +160,8 @@ jobs:
       - name: 'Download merged artifacts'
         uses: actions/download-artifact@v4
         with:
-          pattern: results-final
+          name: results-final
 
       - name: 'Check artifacts'
-        run: ls -lh .
+        run: ls -lhR .
 
