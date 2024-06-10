@@ -80,7 +80,16 @@ jobs:
       - name: Run tests
         if: github.event_name == 'workflow_run'
         working-directory: ./build-output/build
-        run: ls -lh -R
+        run: |
+          ls -lh -R
+          mkdir -p test-results
+          touch test-results/test-result-${{matrix.version}}.json
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: 'results-${{ strategy.job-index }}'
+          path: 'test-results'
 
   report-flaky:
     name: "Report flaky tests"
@@ -132,4 +141,26 @@ jobs:
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
           label: 'flaky test'
+
+  merge-artifacts:
+    name: "Merge artifacts"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Merge artifacts'
+        uses: actions/upload-artifact/merge@v4
+        continue-on-error: true
+        with:
+          name: results-final
+          pattern: results-*
+          delete-merged: true
+          
+      - name: 'Download merged artifacts'
+        uses: actions/download-artifact@v4
+        with:
+          path: ./out
+          pattern: results-final
+
+      - name: 'Check artifacts'
+        run: ls -lh ./out
 
