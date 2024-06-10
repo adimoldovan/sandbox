@@ -33,7 +33,10 @@ jobs:
 
       - name: Run on push
         if: ${{ env.EVENT_NAME == 'push' }}
-        run: echo "Run on push"
+        run: |
+          echo "Run on push"
+          mkdir -p test-results
+          touch test-results/test-result-${{matrix.version}}.json
 
       - name: Run if secret is not set
         if: env.SOME_SECRET == ''
@@ -82,8 +85,6 @@ jobs:
         working-directory: ./build-output/build
         run: |
           ls -lh -R
-          mkdir -p test-results
-          touch test-results/test-result-${{matrix.version}}.json
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
