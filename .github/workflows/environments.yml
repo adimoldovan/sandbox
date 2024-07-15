@@ -10,7 +10,7 @@ jobs:
   run-tests:
     name: "Run tests"
     runs-on: ubuntu-latest
-    environment: production
+    environment: pr-checks-env
     strategy:
       matrix:
         version: [10, 12]
