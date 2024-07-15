@@ -10,7 +10,7 @@ jobs:
   run-tests:
     name: "Run tests"
     runs-on: ubuntu-latest
-    environment: pr-checks-env
+    environment: ${{ (github.event_name == 'pull_request' && github.event.pull_request.draft) && 'draft-mode' || 'run' }}
     strategy:
       matrix:
         version: [10, 12]
