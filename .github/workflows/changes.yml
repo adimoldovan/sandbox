@@ -15,7 +15,7 @@ jobs:
         name: Check diff
         with:
           script: |
-            const execSync = require('node:child_process');
+            const { execSync } = require('node:child_process');
             const output = execSync( `git diff --name-only origin/main`, {
                 encoding: 'utf8',
             } );
