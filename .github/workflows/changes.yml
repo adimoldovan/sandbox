@@ -15,9 +15,8 @@ jobs:
         name: Check diff
         with:
           script: |
-            const diff = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number
-            });
-            console.log(diff.data.base.sha, '...', diff.data.head.sha);
+            import { execSync } from 'node:child_process';
+            const output = execSync( `git diff --name-only ${ baseRef }`, {
+                encoding: 'utf8',
+            } );
+            console.log(output.split( '\n' ));
