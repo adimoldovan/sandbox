@@ -16,7 +16,7 @@ jobs:
         with:
           script: |
             const execSync = require('node:child_process');
-            const output = execSync( `git diff --name-only ${ baseRef }`, {
+            const output = execSync( `git diff --name-only origin/main`, {
                 encoding: 'utf8',
             } );
             console.log(output.split( '\n' ));
