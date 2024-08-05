@@ -21,8 +21,40 @@ jobs:
           npm install
           npm exec playwright install
 
+      - name: Download last run info'
+        id: 'download-last-run-info'
+        uses: actions/download-artifact@v4
+        with:
+          pattern: '.last-run__${{ strategy.job-index }}.json'
+
       - name: Run tests
-        run: npm run test
+        run: |
+          # Move and rename the downloaded file to the expected name
+          ls -lh
+          downloadedFile="${{ steps.download-last-run-info.outputs.download-path }}/.last-run__${{ strategy.job-index }}.json"
+          lastRunFilePath="$ARTIFACTS_PATH/.last-run.json"
+          if [ -f "$downloadedFile" ]; then
+            ls -lh "${{ steps.download-last-run-info.outputs.download-path }}"
+            mv "$downloadedFile" "$lastRunFilePath"
+            ls -lh "$ARTIFACTS_PATH"
+          fi
+          
+          lastRunFlag=""
+          if [ -f "$lastRunFilePath" ]; then
+            cat "$lastRunFilePath"
+            # Playwright last run info is available, parse the file and check if there are failed tests
+            failedTests=$(jq '.failedTests | length' "$lastRunFilePath")
+          
+            # Only if there are failed tests, we want to use the --last-failed flag. 
+            # The run will fail if we're using the flag and there are no failed tests.
+            if [ "$failedTests" -gt 0 ]; then
+              echo "Found failed tests, running only failed tests"
+              lastRunFlag="--last-failed"
+            fi
+          fi
+          
+          npm run test $lastRunFlag
+          
 
       - name: Upload last run info
         if: ${{ failure() }}
