@@ -25,7 +25,7 @@ jobs:
         id: 'download-last-run-info'
         uses: actions/download-artifact@v4
         with:
-          pattern: '.last-run__${{ strategy.job-index }}.json'
+          pattern: 'last-run__${{ strategy.job-index }}.json'
 
       - name: Run tests
         run: |
@@ -36,9 +36,9 @@ jobs:
           lastRunFilePath="test-results/.last-run.json"
           if [[ -f "$downloadedFile" ]]; then
             echo "Found last run info file: \"$downloadedFile\""
-            ls -lh "${{ steps.download-last-run-info.outputs.download-path }}"
+            ls -lha "${{ steps.download-last-run-info.outputs.download-path }}"
             mv "$downloadedFile" "$lastRunFilePath"
-            ls -lh test-results
+            ls -lha test-results
           else
             echo "No last run info file found. Searched for: \"$downloadedFile\""
           fi
@@ -65,7 +65,7 @@ jobs:
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
-          name: '.last-run__${{ strategy.job-index }}.json'
+          name: 'last-run__${{ strategy.job-index }}.json'
           path: 'test-results/.last-run.json'
           if-no-files-found: ignore
           overwrite: true
