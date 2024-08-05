@@ -34,11 +34,12 @@ jobs:
           ls -lha "${{ steps.download-last-run-info.outputs.download-path }}"
           downloadedFolder="${{ steps.download-last-run-info.outputs.download-path }}/last-run__${{ strategy.job-index }}"
           lastRunFileDest="test-results/.last-run.json"
+          
           if [ -e "$downloadedFolder" ]; then
             echo "Found last run info folder: \"$downloadedFolder\""
             ls -lha "$downloadedFolder"
             
-            lastRunFile = "$downloadedFolder/.last-run.json"
+            lastRunFile="$downloadedFolder/.last-run.json"
             if [ -f "$lastRunFile" ]; then
                 echo "Found last run info file: \"$lastRunFile\""
                 mv "$lastRunFile" "$destination"
@@ -65,7 +66,6 @@ jobs:
           
           echo "Running tests. Last run flag: $lastRunFlag" 
           npm run test $lastRunFlag
-          
 
       - name: Upload last run info
         if: ${{ failure() }}
