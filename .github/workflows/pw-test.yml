@@ -25,30 +25,35 @@ jobs:
         id: 'download-last-run-info'
         uses: actions/download-artifact@v4
         with:
-          pattern: 'last-run__${{ strategy.job-index }}.json'
+          pattern: 'last-run__${{ strategy.job-index }}'
 
       - name: Run tests
         run: |
           # Move and rename the downloaded file to the expected name
           echo "download step output: ${{ steps.download-last-run-info.outputs.download-path }}"
           ls -lha "${{ steps.download-last-run-info.outputs.download-path }}"
-          downloadedFile="${{ steps.download-last-run-info.outputs.download-path }}/last-run__${{ strategy.job-index }}.json"
-          ls -lha "$downloadedFile"
-          lastRunFilePath="test-results/.last-run.json"
-          if [ -f "$downloadedFile" ]; then
-            echo "Found last run info file: \"$downloadedFile\""
-            ls -lha "${{ steps.download-last-run-info.outputs.download-path }}"
-            mv "$downloadedFile" "$lastRunFilePath"
-            ls -lha test-results
+          downloadedFolder="${{ steps.download-last-run-info.outputs.download-path }}/last-run__${{ strategy.job-index }}.json"
+          lastRunFileDest="test-results/.last-run.json"
+          if [ -e "$downloadedFolder" ]; then
+            echo "Found last run info folder: \"$downloadedFolder\""
+            ls -lha "$downloadedFolder"
+            
+            lastRunFile = "$downloadedFolder/.last-run.json"
+            if [ -f "$lastRunFile" ]; then
+                echo "Found last run info file: \"$lastRunFile\""
+                mv "$lastRunFile" "$destination"
+            else
+                echo "No last run info file found. Searched for: \"$lastRunFile\""
+            fi
           else
-            echo "No last run info file found. Searched for: \"$downloadedFile\""
+            echo "No last run folder found. Searched for: \"$downloadedFolder\""
           fi
           
           lastRunFlag=""
-          if [ -f "$lastRunFilePath" ]; then
-            cat "$lastRunFilePath"
+          if [ -f "$lastRunFileDest" ]; then
+            cat "$lastRunFileDest"
             # Playwright last run info is available, parse the file and check if there are failed tests
-            failedTests=$(jq '.failedTests | length' "$lastRunFilePath")
+            failedTests=$(jq '.failedTests | length' "$lastRunFileDest")
           
             # Only if there are failed tests, we want to use the --last-failed flag. 
             # The run will fail if we're using the flag and there are no failed tests.
@@ -66,7 +71,7 @@ jobs:
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
-          name: 'last-run__${{ strategy.job-index }}.json'
+          name: 'last-run__${{ strategy.job-index }}'
           path: 'test-results/.last-run.json'
           if-no-files-found: ignore
           overwrite: true
