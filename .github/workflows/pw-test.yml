@@ -35,9 +35,12 @@ jobs:
           downloadedFile="${{ steps.download-last-run-info.outputs.download-path }}/.last-run__${{ strategy.job-index }}.json"
           lastRunFilePath="test-results/.last-run.json"
           if [[ -f "$downloadedFile" ]]; then
+            echo "Found last run info file: \"$downloadedFile\""
             ls -lh "${{ steps.download-last-run-info.outputs.download-path }}"
             mv "$downloadedFile" "$lastRunFilePath"
             ls -lh test-results
+          else
+            echo "No last run info file found. Searched for: \"$downloadedFile\""
           fi
           
           lastRunFlag=""
