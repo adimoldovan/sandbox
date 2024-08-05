@@ -4,7 +4,7 @@ on:
 
 jobs:
   upload:
-    name: "Check diff"
+    name: "Run tests"
     runs-on: ubuntu-latest
 
     steps:
@@ -17,7 +17,9 @@ jobs:
         uses: actions/setup-node@v4
 
       - name: Install
-        run: npm install
+        run: | 
+          npm install
+          npm playwright install
 
       - name: Run tests
         run: npm run test
