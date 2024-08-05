@@ -34,7 +34,7 @@ jobs:
           ls -lha "${{ steps.download-last-run-info.outputs.download-path }}"
           downloadedFile="${{ steps.download-last-run-info.outputs.download-path }}/last-run__${{ strategy.job-index }}.json"
           lastRunFilePath="test-results/.last-run.json"
-          if [[ -f "$downloadedFile" ]]; then
+          if [ -f "$downloadedFile" ]; then
             echo "Found last run info file: \"$downloadedFile\""
             ls -lha "${{ steps.download-last-run-info.outputs.download-path }}"
             mv "$downloadedFile" "$lastRunFilePath"
