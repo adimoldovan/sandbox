@@ -32,23 +32,17 @@ jobs:
           # Move and rename the downloaded file to the expected name
           echo "download step output: ${{ steps.download-last-run-info.outputs.download-path }}"
           ls -lha "${{ steps.download-last-run-info.outputs.download-path }}"
-          downloadedFolder="${{ steps.download-last-run-info.outputs.download-path }}/last-run__${{ strategy.job-index }}"
+          lastRunFile="${{ steps.download-last-run-info.outputs.download-path }}/last-run__${{ strategy.job-index }}/.last-run.json"
           lastRunFileDest="test-results/.last-run.json"
           
-          if [ -e "$downloadedFolder" ]; then
-            echo "Found last run info folder: \"$downloadedFolder\""
-            ls -lha "$downloadedFolder"
-            
-            lastRunFile="$downloadedFolder/.last-run.json"
-            if [ -f "$lastRunFile" ]; then
-                echo "Found last run info file: \"$lastRunFile\""
-                mv "$lastRunFile" "$destination"
-            else
-                echo "No last run info file found. Searched for: \"$lastRunFile\""
-            fi
+          if [ -f "$lastRunFile" ]; then
+              echo "Found last run info file: \"$lastRunFile\""
+              echo "Moving to destination: \"$lastRunFileDest\""
+              mkdir -p test-results
+              mv "$lastRunFile" "$destination"
           else
-            echo "No last run folder found. Searched for: \"$downloadedFolder\""
-          fi
+              echo "No last run info file found. Searched for: \"$lastRunFile\""
+         fi
           
           lastRunFlag=""
           if [ -f "$lastRunFileDest" ]; then
