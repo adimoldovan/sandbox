@@ -36,7 +36,7 @@ jobs:
               echo "Found last run info file: \"$lastRunFile\""
               echo "Moving to destination: \"$lastRunFileDest\""
               mkdir -p test-results
-              mv "$lastRunFile" "$destination"
+              mv "$lastRunFile" "$lastRunFileDest"
           else
               echo "No last run info file found. Searched for: \"$lastRunFile\""
           fi
