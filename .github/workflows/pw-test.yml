@@ -32,7 +32,7 @@ jobs:
           # Move and rename the downloaded file to the expected name
           echo "download step output: ${{ steps.download-last-run-info.outputs.download-path }}"
           ls -lha "${{ steps.download-last-run-info.outputs.download-path }}"
-          downloadedFolder="${{ steps.download-last-run-info.outputs.download-path }}/last-run__${{ strategy.job-index }}.json"
+          downloadedFolder="${{ steps.download-last-run-info.outputs.download-path }}/last-run__${{ strategy.job-index }}"
           lastRunFileDest="test-results/.last-run.json"
           if [ -e "$downloadedFolder" ]; then
             echo "Found last run info folder: \"$downloadedFolder\""
