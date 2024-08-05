@@ -1,9 +1,6 @@
 name: Test changes
 on:
   pull_request:
-  push:
-    branches:
-      - main
 
 jobs:
   upload:
@@ -13,14 +10,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/github-script@v7
         name: Check diff
         with:
           script: |
-            const diff = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number
-            });
-            console.log(diff.data.base.sha, '...', diff.data.head.sha);
+            const { execSync } = require('node:child_process');
+            const output = execSync( `git diff --name-status origin/main`, {
+                encoding: 'utf8',
+            } );
+            console.log(output.split( '\n' ));
