@@ -56,7 +56,7 @@ jobs:
           fi
           
           echo "Running tests. Last run flag: $lastRunFlag" 
-          npm run test $lastRunFlag
+          npm run test -- $lastRunFlag
 
       - name: Upload last run info
         if: ${{ failure() }}
