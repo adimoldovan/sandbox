@@ -19,7 +19,7 @@ jobs:
       - name: Install
         run: | 
           npm install
-          npm playwright install
+          npm exec playwright install
 
       - name: Run tests
         run: npm run test
