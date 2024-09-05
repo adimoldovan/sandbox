@@ -106,7 +106,7 @@ jobs:
   print-results:
     name: "Print jobs results"
     runs-on: ubuntu-latest
-    if: ${{ always() && false }}
+    if: ${{ always() }}
     needs: [ create-matrix, matrix-job-1, matrix-job-2 ]
 
     steps:
