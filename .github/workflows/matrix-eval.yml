@@ -74,7 +74,7 @@ jobs:
         fail-fast: false
         matrix:
           include: ${{fromJson( needs.create-matrix.outputs.jobs2 )}}
-        
+
       steps:
         - name: Run
           id: run
@@ -85,16 +85,16 @@ jobs:
               # fail fail fail
               # if [ ${{ matrix.name }} == "job2.1" ]; then exit 1; fi
               # if [ ${{ matrix.name }} == "job2.2" ]; then exit 1; fi
-        
+
         - name: Update status
           if: ${{ always() }}
           run: |
             echo "${{job.status}}" >> $GITHUB_STEP_SUMMARY
-    
+
         - name: Create result file
           if: ${{ (failure() || cancelled()) && matrix.optional == false }}
           run: echo "${{toJson(matrix)}}" > result-matrix-job-2-${{ strategy.job-index }}-${{job.status}}.json
-    
+
         - name: Upload result file
           if: ${{ (failure() || cancelled()) && matrix.optional == false }}
           uses: actions/upload-artifact@v4
@@ -135,13 +135,21 @@ jobs:
     name: "Evaluate with artifacts"
     runs-on: ubuntu-latest
     if: ${{ always() && false }}
-    needs: [ matrix-job-1, matrix-job-2 ]
+    needs: [ create-matrix, matrix-job-1, matrix-job-2 ]
 
     steps:
       - uses: actions/download-artifact@v4
         with:
           pattern: result-*
           merge-multiple: true
+
+      - uses: actions/github-script@v7
+        name: 'Print list of failed jobs'
+        with:
+          script: |
+            const jobs = ${{ toJson(needs.matrix-job-1) }};
+            console.log(jobs);
+
       - name: Evaluate
         run: |
           echo "$jobs_status"
