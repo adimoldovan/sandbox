@@ -103,6 +103,35 @@ jobs:
             name: result-matrix-job-2-${{ strategy.job-index }}-${{job.status}}
             if-no-files-found: warn
 
+  print-results:
+    name: "Print jobs results"
+    runs-on: ubuntu-latest
+    if: ${{ always() && false }}
+    needs: [ create-matrix, matrix-job-1, matrix-job-2 ]
+
+    steps:
+      - uses: actions/github-script@v7
+        name: 'Print list of failed jobs'
+        with:
+          script: |
+            const jobs = ${{ toJson(needs.matrix-job-1) }};
+            console.log(jobs);
+
+      - name: Evaluate
+        run: |
+          echo "$jobs_status"
+          echo "needs context: ${{ toJson(needs) }}"
+          
+          ls -lh
+          names="$(jq --slurp -c 'map(.name)' result-*.json)"
+          echo $names
+          
+          echo $result
+          if [[ $result != "success" && $result != "skipped" ]]; then
+            echo "One or more needed jobs have failed."
+            exit 1
+          fi
+
   evaluate-with-api:
     name: "Evaluate with API"
     runs-on: ubuntu-latest
@@ -142,13 +171,6 @@ jobs:
         with:
           pattern: result-*
           merge-multiple: true
-
-      - uses: actions/github-script@v7
-        name: 'Print list of failed jobs'
-        with:
-          script: |
-            const jobs = ${{ toJson(needs.matrix-job-1) }};
-            console.log(jobs);
 
       - name: Evaluate
         run: |
